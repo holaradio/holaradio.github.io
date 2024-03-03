@@ -4,7 +4,8 @@ body {
 
 p {
     color: #333;
-    font-size: 5vw;
+    width: 0;
+    min-width: 100%;
 }
 
 img.logo {
@@ -12,7 +13,8 @@ img.logo {
     height: auto;
 }
 
-div.container{
+.container{
+    display: inline-block;
     justify-content: center;
     align-items: center;
 }
