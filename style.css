@@ -13,7 +13,6 @@ img.logo {
 }
 
 div.container{
-    display: flex;
     justify-content: center;
     align-items: center;
 }
