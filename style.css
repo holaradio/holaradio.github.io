@@ -2,10 +2,10 @@ body {
     background-color:#f0f0f0";
 }
 
-h2 {
+p {
     color: #333;
     width: 0;
-    min-width: 100%;
+    font-size: 5vw;
 }
 
 img.logo {
