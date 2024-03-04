@@ -5,14 +5,10 @@ body {
 p {
     color: #fff;
     font-size: 5vw;
+    text-align: center;
 }
 
 img.logo {
     max-width: 100%;
     height: auto;
-}
-
-.container{
-    justify-content: center;
-    align-items: center;
 }
