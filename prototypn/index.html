@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <title>Radio Hôla – Start</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    const låtar = [
+      '"Laser i Lagårn" – Disko-Kurt',
+      '"Fjälltechno" – DJ Jämtbiten',
+      '"Folksynt" – Karin & Kretskortet',
+      '"Knätofs Dubstep" – ZätaZork',
+      '"Traktorrave i Grönköping" – DJ Glesbygd',
+      '"Bälg och Beats" – Dragspelarna 3000',
+      '"Hölasshouse" – DJ Halm'  
+    ];
+
+    function bytLåt() {
+      const element = document.getElementById('nu-spelas');
+      const slumpad = låtar[Math.floor(Math.random() * låtar.length)];
+      element.textContent = '🎶 Nu spelas: ' + slumpad;
+    }
+
+    setInterval(bytLåt, 100000);
+    window.onload = bytLåt;
+  </script>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="header">
+      📻 Radio Hôla – Din lokala ljudmaskin!
+    </div>
+
+    <div id="nav">
+      <a href="index.html">Start</a> |
+      <a href="program.html">Program</a> |
+      <a href="om-oss.html">Om Oss</a> |
+      <a href="lyssna.html">Lyssna Live</a> |
+      <a href="kontakt.html">Kontakt</a>
+    </div>
+
+    <div id="content">
+
+      <!-- Rullande text -->
+      <marquee behavior="scroll" direction="left" scrollamount="4">
+        🎉 Välkommen till Radio Hôla – 103.5 FM från hjärtat av Hôlaviken 🎉
+      </marquee>
+
+      <!-- Välkomsttext -->
+      <h2>Välkommen till Radio Hôla!</h2>
+      <p>
+        Radio Hôla är inte bara en radiokanal – det är en livsstil. Sedan 1999 har vi sänt direkt från vår lilla studio i Hôlavikens gamla stationshus. 
+        Med hjärtat i det lokala och örat mot etern erbjuder vi en mix av musik, kultur och röster från bygden.
+      </p>
+      <p>
+        Vi spelar allt från dansbandsballader till teknofolk, med dagliga önskeprogram, nattliga DJ-set och charmiga samtal med traktens original. 
+        Oavsett om du lyssnar under morgonkaffet, i traktorn eller på kvällspromenaden så finns vi där – med värme, humor och en gnutta disko.
+      </p>
+      <p>
+        Vi tror på analog själ i en digital värld. Välkommen in i värmen – Radio Hôla spelar för dig.
+      </p>
+
+      <!-- Nu spelas-funktionen -->
+      <h3 class="blink" id="nu-spelas">🎶 Nu spelas: laddar...</h3>
+
+      <!-- Bild -->
+      <img src="https://images.pexels.com/photos/31323337/pexels-photo-31323337.jpeg" alt="Radio" width="100">
+
+      <!-- Sponsorer -->
+      <div id="sponsors">
+        <h3>Våra stolta sponsorer:</h3>
+        <ul>
+          <li>Frasses Fiske & Flipperspel</li>
+          <li>Kalles Kroll & Kaninkurser</li>
+          <li>Systrarna Surrs Sylt & Silent Disco</li>
+          <li>Retro-Bengts VHS-Paradis</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="footer">
+      © 2004 Radio Hôla | Hôlaviken 103.5 FM
+    </div>
+  </div>
+</body>
+</html>

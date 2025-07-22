@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Namngenerator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Cormorant Garamond', serif;
+        background-color: #eb5424;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        padding: 2rem;
+        background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg"><path fill="%23d4461f" fill-opacity="1" d="M0,192L80,202.7C160,213,320,235,480,229.3C640,224,800,192,960,186.7C1120,181,1280,203,1360,213.3L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path></svg>');
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      .container {
+        max-width: 600px;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      select,
+      button {
+        padding: 0.5rem 1rem;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+      }
+
+      button {
+        background-color: #fff;
+        color: #eb5424;
+        font-weight: bold;
+      }
+
+      .name {
+        font-size: 2rem;
+        margin: 1rem 0;
+        animation: pop 0.5s ease-out;
+      }
+
+      @keyframes pop {
+        0% { transform: scale(0.8); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+
+      ul {
+        text-align: left;
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🪵 Namngenerator</h1>
+      <select id="villageSelect">
+        <option value="Hôla">Hôla</option>
+        <option value="Gruvvik">Gruvvik</option>
+      </select>
+      <br />
+      <button onclick="generateName()">Generera förnamn</button>
+      <div id="nameDisplay" class="name"></div>
+      <button onclick="generateSurname()">Lägg till efternamn</button>
+      <ul id="history"></ul>
+      <button onclick="downloadHistory()">📜 Spara namn till fil</button>
+    </div>
+
+    <script>
+      const nameData = {
+        "Hôla": {
+          forled: ["Halv", "Tork", "Lind", "Älv", "Verm", "Kast", "Jöns", "Olof"],
+          efterled: ["sten", "bjärn", "vard", "mund", "löv", "mar", "gäst", "lin"],
+          surnameForled: ["Backe", "Klint", "Damm", "Eke", "Råg", "Nor", "Sval", "Täpp", "Glim", "Brun", "Krum", "Ängs", "Gull", "Knarr"],
+          surnameEfterled: ["lund", "ås", "gren", "ström", "hult", "hed", "klyft", "säter", "run", "dal", "näver", "bleck", "själl", "krans"]
+        },
+        "Gruvvik": {
+          forled: ["Gräv", "Snor", "Karg", "Skruv", "Mjöl", "Rämm", "Bryn", "Trul"],
+          efterled: ["torp", "grim", "näs", "benn", "lek", "varg", "hult", "kvist"],
+          surnameForled: ["Sten", "Grå", "Rost", "Kol", "Skarn", "Malm", "Sot", "Järn", "Bläster", "Gruv", "Flint", "Bränt", "Skrubb", "Tjär"],
+          surnameEfterled: ["häll", "myr", "vik", "strup", "sjö", "näs", "gång", "grop", "blot", "slug", "svalg", "brink", "fäll", "råk"]
+        }
+      };
+
+      let currentName = "";
+      const history = [];
+
+      function getRandom(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+
+      function generateName() {
+        const village = document.getElementById("villageSelect").value;
+        const forled = getRandom(nameData[village].forled);
+        const efterled = getRandom(nameData[village].efterled);
+        currentName = forled + efterled;
+        document.getElementById("nameDisplay").textContent = currentName;
+        history.push(currentName);
+        updateHistory();
+      }
+
+      function generateSurname() {
+        if (!currentName) return;
+        const village = document.getElementById("villageSelect").value;
+        const forled = getRandom(nameData[village].surnameForled);
+        const efterled = getRandom(nameData[village].surnameEfterled);
+        currentName += " " + forled + efterled;
+        document.getElementById("nameDisplay").textContent = currentName;
+        history[history.length - 1] = currentName;
+        updateHistory();
+      }
+
+      function updateHistory() {
+        const list = document.getElementById("history");
+        list.innerHTML = history.map(n => `<li>${n}</li>`).join("");
+      }
+
+      function downloadHistory() {
+        const village = document.getElementById("villageSelect").value;
+        const date = new Date().toISOString().slice(0, 10);
+        const fileName = `namnhistorik_${village}_${date}.txt`;
+        const blob = new Blob([history.join("\n")], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    </script>
+  </body>
+</html>
