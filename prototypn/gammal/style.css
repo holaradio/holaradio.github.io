@@ -1,0 +1,65 @@
+body {
+  background-color: #e0e0ff;
+  font-family: Verdana, sans-serif;
+  color: #000033;
+  margin: 0;
+  padding: 0;
+}
+#wrapper {
+  width: 800px;
+  margin: auto;
+  border: 2px solid #333366;
+  background-color: #ffffff;
+}
+#header {
+  background: linear-gradient(to right, #6666cc, #9999ff);
+  padding: 20px;
+  color: white;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+#nav {
+  background-color: #ccccff;
+  padding: 10px;
+  text-align: center;
+}
+#nav a {
+  margin: 0 10px;
+  color: #000066;
+  text-decoration: none;
+  font-weight: bold;
+}
+#nav a:hover {
+  text-decoration: underline;
+}
+#content {
+  padding: 20px;
+}
+#sponsors {
+  margin-top: 30px;
+  padding: 10px;
+  background-color: #f0f0ff;
+  border: 1px dashed #9999cc;
+}
+#footer {
+  background-color: #ccccff;
+  text-align: center;
+  font-size: 12px;
+  padding: 10px;
+  color: #333366;
+}
+.blink {
+  animation: blink-animation 1s steps(2, start) infinite;
+  -webkit-animation: blink-animation 1s steps(2, start) infinite;
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
