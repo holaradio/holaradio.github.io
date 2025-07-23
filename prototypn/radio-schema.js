@@ -3,25 +3,19 @@
 // 🎙️ Programtablå
 const programSchema = [
   // Måndag (1)
-  { titel: 'Morgon med Majsan', dag: 1, tid: "06:00", duration: "60:00" },
-  { titel: '"Laser i Lagårn" – Disko-Kurt', dag: 1, tid: "07:15", duration: "3:40" },
-  { titel: 'Lokala Nyheter', dag: 1, tid: "08:00", duration: "10:00" },
-  { titel: 'Eftermiddag i etern med Gun & Guran', dag: 1, tid: "16:30", duration: "60:00" },
-
-  // Tisdag (2)
-  { titel: 'Tisdagstango', dag: 2, tid: "07:00", duration: "30:00" },
-  { titel: 'Kommunfullmäktige – Direkt', dag: 2, tid: "18:00", duration: "90:00" },
+  { titel: 'Såga med Torbjernt', dag: 1, tid: "06:00", duration: "60:00" },
   
+  // Tisdag (2)
+  { titel: 'Fråga folket', dag: 2, tid: "14:07", duration: "10:00" },
+   
   // Onsdag (3)
   { titel: 'Hôla-nyset', dag: 3, tid: "15:37", duration: "5:43" },
 
   // Fredag (5)
-  { titel: 'Fredagsfika i etern', dag: 5, tid: "10:00", duration: "45:00" },
-  { titel: 'Nattmix med DJ Halm', dag: 5, tid: "22:00", duration: "120:00" },
+  { titel: 'Hôlas hemligheter', dag: 5, tid: "10:00", duration: "45:00" },
 
   // Lördag (6)
-  { titel: 'Lördagslugnt med Rune', dag: 6, tid: "09:00", duration: "60:00" },
-  { titel: 'Dansbandsnatt', dag: 6, tid: "21:00", duration: "180:00" },
+  { titel: 'Survivor', dag: 6, tid: "09:00", duration: "20:00" },
 ];
 
 // 🎵 Slumpbara låtar vid mellanspel
