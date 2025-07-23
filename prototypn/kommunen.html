@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  
   <div id="wrapper">
      <div id="header">
       <img src="../images/radiohola.png" alt="Radio Hôla logotype" class="logo">
@@ -31,8 +32,12 @@
       <h3>Aktuella projekt & initiativ</h3>
       <ul>
         <li><strong>Webbkamera mot ingenting:</strong> Kommunen satsar på slow-tv. Efter att ha utsetts till frivillig, har Ruban nu placerat en webkamera riktad
-        mot en stubbe i Hôlskogen. I dagsläget 17 trogna tittare.</li>
+        mot en stubbe i Hôlskogen. I dagsläget <b id="demo"></b> trogna tittare.</li>
       </ul>
+       <script>
+          var randomNumber = Math.floor(Math.random() * 20)
+	     document.getElementById("demo").innerHTML = randomNumber;
+       </script>
 
       <h3>Kommande medborgardialog</h3>
       <p>

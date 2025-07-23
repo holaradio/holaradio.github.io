@@ -44,9 +44,7 @@ const låtbibliotek = [
 	  { titel: '"Karelen, här är alla felen" – Curt III', duration: "1:00" },
 	  { titel: '"Blipp" – Curt III', duration: "5:00" },
 	  { titel: '"Whatch out for the animals" – DJ.ur', duration: "3:03" },
-
-
-    { titel: '"VHS Visioner" – Retro-Rut', duration: "3:30" }
+       { titel: '"VHS Visioner" – Retro-Rut', duration: "3:30" }
 ];
 
 // ⏱ Hjälpfunktioner
