@@ -11,6 +11,9 @@ const programSchema = [
   // Tisdag (2)
   { titel: 'Tisdagstango', dag: 2, tid: "07:00", duration: "30:00" },
   { titel: 'Kommunfullmäktige – Direkt', dag: 2, tid: "18:00", duration: "90:00" },
+  
+  // Onsdag (3)
+  { titel: 'Hôla-nyset', dag: 3, tid: "15:37", duration: "5:43" },
 
   // Fredag (5)
   { titel: 'Fredagsfika i etern', dag: 5, tid: "10:00", duration: "45:00" },
