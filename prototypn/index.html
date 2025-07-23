@@ -4,45 +4,7 @@
   <meta charset="UTF-8">
   <title>Radio Hôla – Start</title>
   <link rel="stylesheet" href="style.css">
-  <script>
-    const låtar = [
-     '"Laser i Lagårn" – Disko-Kurt',
-     '"Fjälltechno" – DJ Jämtbiten',
-     '"Folksynt" – Karin & Kretskortet',
-     '"Knätofs Dubstep" – ZätaZork',
-     '"Traktorrave i Grönköping" – DJ Glesbygd',
-     '"Bälg och Beats" – Dragspelarna 3000',
-     '"Hölasshouse" – DJ Halm',
-     '"Raggarragg på Rågbröd" – Majsan & Maskinparken',
-     '"Skörd och Skunk" – LantReggae',
-     '"Vakuumvalsen" – Elektriska Erik',
-     '"Mellanmjölk och Megabass" – DJ Lagom',
-     '"Flanell Flashbacks" – Lasse från Förr',
-     '"Rimfrostromantik" – Gun & Guran',
-     '"Dimmig Diesel" – Traktorfunkarna',
-     '"Snus i Samplern" – MC Mössa',
-     '"Vi ses på macken" – Hôla Boys ft. Kristina',
-     '"Skymningsslingor från Säffle" – Ambient-Åke',
-     '"Disco i Duggregn" – Neondaggen',
-     '"Kvällsfika & Kickdrum" – SmörBeats',
-     '"Modemljud & Melodier" – 56kSymfonin',
-     '"Datadans på Bygdegården" – DJ Tretex',
-     '"Torglördag 2001" – Bengt med Band',
-     '"Jazz i Järnrör" – Svetskvartetten',
-     '"VHS Visioner" – Retro-Rut',
-     '"Baklänges i Bäckhammar" – Experimentella Eva',
-     '"Kokkaffe & Kassetter" – ToneLars'
-    ];
-
-    function bytLåt() {
-      const element = document.getElementById('nu-spelas');
-      const slumpad = låtar[Math.floor(Math.random() * låtar.length)];
-      element.textContent = '🎶 Nu spelas: ' + slumpad;
-    }
-
-    setInterval(bytLåt, 100000);
-    window.onload = bytLåt;
-  </script>
+<script src="radio-schema.js"></script>
 </head>
 <body>
   <div id="wrapper">
@@ -81,7 +43,7 @@
       </p>
 
       <!-- Nu spelas-funktionen -->
-      <h3 class="blink" id="nu-spelas">🎶 Nu spelas: laddar...</h3>
+	<div id="nu-spelas" style="margin-top: 20px; font-weight: bold;"></div>
 
       <!-- Bild -->
       <img src="https://images.pexels.com/photos/31323337/pexels-photo-31323337.jpeg" alt="Radio" width="100">
