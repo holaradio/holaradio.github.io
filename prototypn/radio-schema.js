@@ -26,31 +26,33 @@ const programSchema = [
 
 // 🎵 Slumpbara låtar vid mellanspel
 const låtbibliotek = [
-  { titel: '"Here I was" – Hairsmoke', duration: "4:10" },
-  { titel: '"Why was I here?" – Hairsmoke', duration: "3:25" },
-  { titel: '"Here I wasn't" – Hairsmoke', duration: "5:00" },
-  { titel: '"Why wasn't I here?" – Hairsmoke', duration: "3:55" },
-  { titel: '"Why?" – Hairsmoke', duration: "4:05" },
-  { titel: '"Where is my hair?" – Hairsmoke', duration: "3:15" },
-  { titel: '"My hair is where?" – Hairsmoke', duration: "6:10" },
-  { titel: '"Where wasn't my hair" – Hairsmoke', duration: "3:10" },
-  { titel: '"Why is my hair" – Hairsmoke', duration: "5:25" },
-  { titel: '"Hej, alla glada människor i staden" – Roy Nilsson', duration: "15:00" },
-  { titel: '"Hej, alla människor i staden (DJ Rexxmak Remix)" - DJ Rexxmak och Roy Nilsson', duration: "3:50" },
-  { titel: '"Hej, alla glada människor i Baden-Baden" – Roy Nilsson', duration: "4:20" },
-  { titel: '"Number Eight" – Pink Blue', duration: "3:15" },
-  { titel: '"Drop the beat" – DJ Rexxmak', duration: "4:12" },
-  { titel: '"Drop the bassdrum" – DJ Rexxmak', duration: "2:45" },
-  { titel: '"Drop the drop" – DJ Rexxmak', duration: "5:15" },
-  { titel: '"Dance" – DJ Rexxmak', duration: "4:11" },
-  { titel: '"It's lit" – DJ Rexxmak', duration: "3:00" },
-  { titel: '"Môbbar'n bakom ICA" – Stig-Rolfbertz', duration: "20:00" },
-  { titel: '"Ryska karelen" – Curt III', duration: "4:20" },
-  { titel: '"Brus" – Curt III', duration: "3:00" },
-  { titel: '"Karelen, här är alla felen" – Curt III', duration: "1:00" },
-  { titel: '"Blipp" – Curt III', duration: "5:00" },
-  { titel: '"Whatch out for the animals" – DJ.ur', duration: "3:03" },
-  { titel: '"VHS Visioner" – Retro-Rut', duration: "3:30" }
+    { titel: '"Here I was" – Hairsmoke', duration: "4:10" },
+	  { titel: '"Why was I here?" – Hairsmoke', duration: "3:25" },
+	  { titel: '"Here I wasnt" – Hairsmoke', duration: "5:00" },
+	  { titel: '"Why wasnt I here?" – Hairsmoke', duration: "3:55" },
+	  { titel: '"Why?" – Hairsmoke', duration: "4:05" },
+	  { titel: '"Where is my hair?" – Hairsmoke', duration: "3:15" },
+	  { titel: '"My hair is where?" – Hairsmoke', duration: "6:10" },
+	  { titel: '"Where wasnt my hair" – Hairsmoke', duration: "3:10" },
+	  { titel: '"Why is my hair" – Hairsmoke', duration: "5:25" },
+	  { titel: '"Hej, alla glada människor i staden" – Roy Nilsson', duration: "15:00" },
+	  { titel: '"Hej, alla människor i staden (DJ Rexxmak Remix)" - DJ Rexxmak och Roy Nilsson', duration: "3:50" },
+	  { titel: '"Hej, alla glada människor i Baden-Baden" – Roy Nilsson', duration: "4:20" },
+	  { titel: '"Number Eight" – Pink Blue', duration: "3:15" },
+	  { titel: '"Drop the beat" – DJ Rexxmak', duration: "4:12" },
+	  { titel: '"Drop the bassdrum" – DJ Rexxmak', duration: "2:45" },
+	  { titel: '"Drop the drop" – DJ Rexxmak', duration: "5:15" },
+	  { titel: '"Dance" – DJ Rexxmak', duration: "4:11" },
+	  { titel: '"Its lit" – DJ Rexxmak', duration: "3:00" },
+	  { titel: '"Môbbarn bakom ICA" – Stig-Rolfbertz', duration: "20:00" },
+	  { titel: '"Ryska karelen" – Curt III', duration: "4:20" },
+	  { titel: '"Brus" – Curt III', duration: "3:00" },
+	  { titel: '"Karelen, här är alla felen" – Curt III', duration: "1:00" },
+	  { titel: '"Blipp" – Curt III', duration: "5:00" },
+	  { titel: '"Whatch out for the animals" – DJ.ur', duration: "3:03" },
+
+
+    { titel: '"VHS Visioner" – Retro-Rut', duration: "3:30" }
 ];
 
 // ⏱ Hjälpfunktioner
