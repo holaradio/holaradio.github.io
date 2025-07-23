@@ -58,6 +58,11 @@ body {
 #content {
   padding: 20px;
 }
+#content img {
+  max-width: 50%;
+  height: auto;
+  display: block;
+}
 #sponsors {
   margin-top: 30px;
   padding: 15px;
