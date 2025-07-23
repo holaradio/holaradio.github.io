@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Radio Hôla - Program</title>
   <link rel="stylesheet" href="style.css">
+  <script src="radio-schema.js"></script>
 </head>
 <body>
   <div id="wrapper">
@@ -18,18 +19,48 @@
       <a href="kommunen.html">Kommunen informerar</a>
 
     </div>
-
-    <div id="content">
-      <h2>Programtablå</h2>
-      <table border="1" cellpadding="5">
-        <tr><th>Tid</th><th>Program</th><th>Programledare</th></tr>
-        <tr><td>06:00–09:00</td><td>Hôla Morgon</td><td>Lisa & Glenn</td></tr>
-        <tr><td>09:00–12:00</td><td>Retro & Rökelse</td><td>DJ Grodan</td></tr>
-        <tr><td>12:00–13:00</td><td>Lunch med Lunkan</td><td>Lunkan</td></tr>
-        <tr><td>21:00–00:00</td><td>Nattsudd</td><td>Disko-Kurt</td></tr>
-      </table>
+	<h2>📻 Veckans programtablå</h2>
+	<button onclick="window.print()" style="margin-bottom: 1em;">🖨️ Skriv ut tablån som PDF</button>
+	<div id="tabla-container"></div>
+	
+	<script>
+	  function renderTabla() {
+	    const dagar = [
+	      "Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"
+	    ];
+	
+	    const container = document.getElementById("tabla-container");
+	    container.innerHTML = "";
+	
+	    for (let d = 0; d < 7; d++) {
+	      const programFörDag = programSchema
+	        .filter(p => p.dag === d)
+	        .sort((a, b) => parseTime(a.tid) - parseTime(b.tid));
+	
+	      if (programFörDag.length === 0) continue;
+	
+	      const dagRubrik = document.createElement("h3");
+	      dagRubrik.textContent = dagar[d];
+	      container.appendChild(dagRubrik);
+	
+	      const lista = document.createElement("ul");
+	      lista.style.listStyleType = "square";
+	
+	      programFörDag.forEach(prog => {
+	        const rad = document.createElement("li");
+	        rad.innerHTML = `<strong>${prog.tid}</strong> – ${prog.titel}`;
+	        lista.appendChild(rad);
+	      });
+	
+	      container.appendChild(lista);
+	    }
+	  }
+	
+	  document.addEventListener("DOMContentLoaded", renderTabla);
+	</script>
 
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Triphonic-turntable_close-up_by_Janek_Schaefer_1997.gif/330px-Triphonic-turntable_close-up_by_Janek_Schaefer_1997.gif" alt="DJ GIF">
+   	</div>
     </div>
 
     <div id="footer">© 2004 Radio Hôla</div>

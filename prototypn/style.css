@@ -53,6 +53,16 @@ body {
   color: #42019c;
   font-family: Georgia, serif;
 }
+#tabla-container {
+    font-family: 'Georgia', serif;
+    padding: 1em;
+    margin-top: 1em;
+}
+h3 {
+    color: #333366;
+    border-bottom: 1px dotted #888;
+    margin-top: 1.5em;
+}
 .blink {
   animation: blink-animation 1.2s steps(2, start) infinite;
 }
