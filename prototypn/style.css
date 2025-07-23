@@ -1,3 +1,19 @@
+@media (max-width: 768px) {
+  header {
+    height: 120px;
+    background-size: cover;
+  }
+
+  nav a {
+    display: block;
+    margin: 5px 0;
+  }
+
+  body {
+    font-size: 16px;
+  }
+}
+
 body {
   background-color: #008080;
   font-family: Georgia, serif;
@@ -13,18 +29,35 @@ body {
   box-shadow: 0 0 10px #c4b998;
 }
 #header {
-  background: linear-gradient(to right, #f9ed11, #ea5424);
-  padding: 20px;
-  color: #4a3b0b;
-  text-align: center;
-  font-size: 32px;
+  background-image: url("../images/header.png"); 
+  background-size: cover; 
+  height:200px;
+  display: flex;
+  align-items: center;
   font-family: 'Garamond', serif;
   border-bottom: 2px solid #a3853a;
+}
+#header h1 {
+  background-color: rgba(255, 255, 255, 0.3); /* Vitt med 70 % opacitet */
+  text-shadow: 1px 1px 2px #555;
+  padding: 0.4em 1em;
+  display: inline-block;
+  border-radius: 8px;
+  color: #000; /* Svart text för bra kontrast */
+  font-weight: bold;
+  font-size: 2.5em;
+}
+.logo {
+ /* background-color: rgba(255, 255, 255, 0.3); /* Vitt med 70 % opacitet */*/
+  border-radius: 8px;
+  height: 150px;
+  width: auto;
+  max-width: 100%;
 }
 #nav {
   background-color: #42019c;
   padding: 12px;
-  text-align: center;
+  /*text-align: center;*/
   font-family: Georgia, serif;
 }
 #nav a {
