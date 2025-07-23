@@ -38,7 +38,7 @@ const låtbibliotek = [
 	  { titel: '"Drop the drop" – DJ Rexxmak', duration: "5:15" },
 	  { titel: '"Dance" – DJ Rexxmak', duration: "4:11" },
 	  { titel: '"It&#39;s lit" – DJ Rexxmak', duration: "3:00" },
-	  { titel: '"Môbbar&#39;n bakom ICA" – Stig-Rolfbertz', duration: "20:00" },
+	  { titel: '"Môbbar\'n bakom ICA" – Stig-Rolfbertz', duration: "20:00" },
 	  { titel: '"Ryska karelen" – Curt III', duration: "4:20" },
 	  { titel: '"Brus" – Curt III', duration: "3:00" },
 	  { titel: '"Karelen, här är alla felen" – Curt III', duration: "1:00" },
