@@ -63,6 +63,10 @@ body {
   height: auto;
   display: block;
 }
+#nuspelas {
+  display:flex;
+  align-items:left;
+}
 #sponsors {
   margin-top: 30px;
   padding: 15px;
