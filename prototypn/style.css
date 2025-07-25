@@ -35,7 +35,7 @@ body {
 .logo {
  /* background-color: rgba(255, 255, 255, 0.3); /* Vitt med 70 % opacitet */*/
   border-radius: 8px;
-  height: 150px;
+  height: 200px;
   width: auto;
   max-width: 100%;
 }
