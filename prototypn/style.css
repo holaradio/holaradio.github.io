@@ -34,8 +34,8 @@ body {
 }
 .logo {
  /* background-color: rgba(255, 255, 255, 0.3); /* Vitt med 70 % opacitet */*/
-  border-radius: 8px;
-  height: 200px;
+  padding: 0.5em;
+  height: 140px;
   width: auto;
   max-width: 100%;
 }
