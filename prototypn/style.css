@@ -58,6 +58,13 @@ body {
 #content {
   padding: 20px;
 }
+#kommuninfo {
+  padding: 10px;
+}
+.image-left{
+  float:left;
+  margin-right: 15px;
+}
 #content img {
   max-width: 75%;
   height: auto;
