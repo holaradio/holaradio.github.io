@@ -74,6 +74,10 @@ body {
   display:flex;
   align-items:left;
 }
+#nuspelas h4{
+  margin-left: 0.5em;
+}
+
 #sponsors {
   margin-top: 30px;
   padding: 15px;
