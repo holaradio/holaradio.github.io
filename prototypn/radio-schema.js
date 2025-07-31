@@ -2,8 +2,17 @@
 
 // 🎙️ Programtablå
 const programSchema = [
+  // Söndag (0)
+  { titel: 'Mjôla i Hôla (repris)', dag: 0, tid: "10:00", duration: "80:00" },
+  { titel: 'En dag med (repris)', dag: 0, tid: "11:30", duration: "45:00" },
+  { titel: 'Musikquizz med Uno Bogg (repris)', dag: 0, tid: "12:15", duration: "90:00" },
+  { titel: 'Hôlas hemligheter (repris)', dag: 0, tid: "13:45", duration: "45:00" },
+  { titel: 'Hôlas historia (repris)', dag: 0, tid: "14:30", duration: "90:00" },
+  { titel: 'Intresseklubben (repris)', dag: 0, tid: "16:00", duration: "45:00" },
+  { titel: 'Filosofiska rummet (repris)', dag: 0, tid: "16:45", duration: "45:00" },
+	
   // Måndag (1)
-  { titel: 'Såga med Torbjert', dag: 0, tid: "06:00", duration: "1:00" },
+  { titel: 'Såga med Torbjert', dag: 1, tid: "06:00", duration: "1:00" },
   { titel: 'Hôlamorgon', dag: 1, tid: "07:00", duration: "180:00" },
   { titel: 'Hôlanyset', dag: 1, tid: "10:00", duration: "5:00" },
   { titel: 'Evenemangstips', dag: 1, tid: "10:05", duration: "5:00" },
@@ -18,6 +27,7 @@ const programSchema = [
   { titel: 'Mjôla i Hôla', dag: 1, tid: "18:18", duration: "40:00" },
   { titel: 'Hôlanyset', dag: 1, tid: "19:00", duration: "5:00" },
   { titel: 'Kvällsmackan med Stutbjörn', dag: 1, tid: "19:15", duration: "90:00" },
+	
   // Tisdag (2)
   { titel: 'Såga med Torbjert', dag: 2, tid: "06:00", duration: "1:00" },
   { titel: 'Hôlamorgon', dag: 2, tid: "07:00", duration: "180:00" },
@@ -92,16 +102,7 @@ const programSchema = [
   { titel: 'Fråga folket (repris)', dag: 6, tid: "15:00", duration: "90:00" },
   { titel: 'Survivor Hôla (repris)', dag: 6, tid: "17:00", duration: "90:00" },
   { titel: 'Bobbe och Bultens jobbdagbok (repris)', dag: 6, tid: "18:45", duration: "90:00" },
-  { titel: 'Lördagsvinylen med Uno Bogg och gäster', dag: 6, tid: "21:00", duration: "180:00" },
-
-  // Söndag (0)
-  { titel: 'Mjôla i Hôla (repris)', dag: 0, tid: "10:00", duration: "80:00" },
-  { titel: 'En dag med (repris)', dag: 0, tid: "11:30", duration: "45:00" },
-  { titel: 'Musikquizz med Uno Bogg (repris)', dag: 0, tid: "12:15", duration: "90:00" },
-  { titel: 'Hôlas hemligheter (repris)', dag: 0, tid: "13:45", duration: "45:00" },
-  { titel: 'Hôlas historia (repris)', dag: 0, tid: "14:30", duration: "90:00" },
-  { titel: 'Intresseklubben (repris)', dag: 0, tid: "16:00", duration: "45:00" },
-  { titel: 'Filosofiska rummet (repris)', dag: 0, tid: "16:45", duration: "45:00" },
+  { titel: 'Lördagsvinylen i vinkylen med Uno Bogg och gäster', dag: 6, tid: "21:00", duration: "180:00" },
 ];
 
 // 🎵 Slumpbara låtar vid mellanspel
