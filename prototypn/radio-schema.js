@@ -154,7 +154,7 @@ function formatSekunder(s) {
 // 🎧 Visar nuvarande spelning
 function visaNuSpelas() {
   const nu = new Date();
-  const dag = nu.getDay(); // 0 = Söndag
+  const dag = (nu.getDay() + 6) % 7; // 0 = Söndag
   const timmar = nu.getHours();
   const minuter = nu.getMinutes();
   const nuMin = timmar * 60 + minuter;
