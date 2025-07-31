@@ -77,7 +77,7 @@ function visaNuSpelas() {
 
   const ärFredag = dag === 5;
   const ärLördag = dag === 6;
-  const maxTid = (ärFredag || ärLördag) ? 1440 : 1440; // Fredag/lördag sändning dygnet runt
+  const maxTid = (ärFredag || ärLördag) ? 1440 : 1260; // Fredag/lördag sändning dygnet runt
   const sändningPågår = nuMin >= 360 && nuMin < maxTid;
 
   if (!sändningPågår) {
