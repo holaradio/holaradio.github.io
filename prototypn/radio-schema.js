@@ -95,13 +95,13 @@ const programSchema = [
   { titel: 'Lördagsvinylen med Uno Bogg och gäster', dag: 6, tid: "21:00", duration: "180:00" },
 
   // Söndag (7)
-  { titel: 'Mjôla i Hôla (repris)', dag: 7, tid: "10:00", duration: "80:00" },
-  { titel: 'En dag med (repris)', dag: 7, tid: "11:30", duration: "45:00" },
-  { titel: 'Musikquizz med Uno Bogg (repris)', dag: 7, tid: "12:15", duration: "90:00" },
-  { titel: 'Hôlas hemligheter (repris)', dag: 7, tid: "13:45", duration: "45:00" },
-  { titel: 'Hôlas historia (repris)', dag: 7, tid: "14:30", duration: "90:00" },
-  { titel: 'Intresseklubben (repris)', dag: 7, tid: "16:00", duration: "45:00" },
-  { titel: 'Filosofiska rummet (repris)', dag: 7, tid: "16:45", duration: "45:00" },
+  { titel: 'Mjôla i Hôla (repris)', dag: 0, tid: "10:00", duration: "80:00" },
+  { titel: 'En dag med (repris)', dag: 0, tid: "11:30", duration: "45:00" },
+  { titel: 'Musikquizz med Uno Bogg (repris)', dag: 0, tid: "12:15", duration: "90:00" },
+  { titel: 'Hôlas hemligheter (repris)', dag: 0, tid: "13:45", duration: "45:00" },
+  { titel: 'Hôlas historia (repris)', dag: 0, tid: "14:30", duration: "90:00" },
+  { titel: 'Intresseklubben (repris)', dag: 0, tid: "16:00", duration: "45:00" },
+  { titel: 'Filosofiska rummet (repris)', dag: 0, tid: "16:45", duration: "45:00" },
 ];
 
 // 🎵 Slumpbara låtar vid mellanspel
