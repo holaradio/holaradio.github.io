@@ -30,13 +30,13 @@
 	<script>
 		  function renderTabla() {
 		    const dagar = [
-		      "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"
+		      "Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"
 		    ];
 		
 		    const container = document.getElementById("tabla-container");
 		    container.innerHTML = "";
 		
-		    for (let d = 1; d%7 > 0; d++) {
+		    for (let d = 0; d < 7; d++) {
 		      const programFörDag = programSchema
 		        .filter(p => p.dag === d)
 		        .sort((a, b) => parseTime(a.tid) - parseTime(b.tid));
