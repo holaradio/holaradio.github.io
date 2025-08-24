@@ -126,7 +126,7 @@ const låtbibliotek = [
 	  { titel: '"Drop the bassdrum" – DJ Rexxmak', duration: "2:45" },
 	  { titel: '"Drop the drop" – DJ Rexxmak', duration: "5:15" },
 	  { titel: '"Dance" – DJ Rexxmak', duration: "4:11" },
-	  { titel: '"It&#39;s lit" – DJ Rexxmak', duration: "3:00" },
+	  { titel: '"It\'s lit" – DJ Rexxmak', duration: "3:00" },
 	  { titel: '"Môbbar\'n bakom ICA" – Stig-Rolfbertz', duration: "20:00" },
 	  { titel: '"Ryska karelen" – Curt III', duration: "4:20" },
 	  { titel: '"Brus" – Curt III', duration: "3:00" },
@@ -156,7 +156,7 @@ function formatSekunder(s) {
 // 🎧 Visar nuvarande spelning
 function visaNuSpelas() {
   const nu = new Date();
-  const dag = nu.getDay(); // 0 = Söndag
+  const dag = (nu.getDay() + 6) % 7; // 0 = Måndag
   const timmar = nu.getHours();
   const minuter = nu.getMinutes();
   const nuMin = timmar * 60 + minuter;
@@ -164,9 +164,9 @@ function visaNuSpelas() {
 
   const element = document.getElementById("nu-spelas");
 
-  const ärFredag = dag === 5;
-  const ärLördag = dag === 6;
-  const maxTid = (ärFredag || ärLördag) ? 1440 : 1260; // Fredag/lördag sändning dygnet runt
+  const ärFredag = dag === 4;
+  const ärLördag = dag === 5;
+  const maxTid = (ärFredag || ärLördag) ? 1440 : 1260; 
   const sändningPågår = nuMin >= 360 && nuMin < maxTid;
 
   if (!sändningPågår) {
