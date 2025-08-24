@@ -38,8 +38,8 @@ body {
 }
 .logo {
   display: block;
-  height: 55%;
-  margin:19% 1em 1em 0.7em;
+  height: 58%;
+  margin:18% 1em 1em 0.7em;
 }
 #nav {
   background-color: #42019c;
@@ -121,7 +121,7 @@ body {
 #sponsors {
   margin: 2em 1em 2em;
   padding: 0 0.5em 0 0.5em;
-  background-color: #f9f1dd;
+  background-color: #f9d0d0;
   border: 2px dotted #b89c6f;
 }
 /* Modul för inloggningen */
@@ -258,11 +258,11 @@ body {
   bottom: 0;
   left: 0;
   z-index: 9999;
-  margin: 3em 0 1em;
+  margin-bottom: 1em;
 }
 
 .reklambanner img {
-  max-height: 100%;           /* Gör så att bilden inte sticker ut */
+  max-height: 100%;       
   max-width: 100%;
   object-fit: contain;
 }
