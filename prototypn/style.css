@@ -33,11 +33,10 @@ body {
   font-size: 2.5em;
 }
 .logo-a {
-  display:inline-block;
-  height:100%;
+  display: inline-block;
+  height: 100%;
 }
 .logo {
- /* background-color: rgba(255, 255, 255, 0.3); /* Vitt med 70 % opacitet */*/
   display: block;
   height: 50%;
   margin:23% 1em 1em 0.7em;
