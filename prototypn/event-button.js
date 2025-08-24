@@ -4,7 +4,7 @@
 	  knappar.forEach(knapp => {
 	    knapp.addEventListener("click", () => {
 	      if (knapp.textContent === "Lägg till i min kalender") {
-	        knapp.textContent = "Tillagd i din kalender!";
+	        knapp.textContent = "Ta bort från min kalender";
 	      } else {
 	        knapp.textContent = "Lägg till i min kalender";
 	      }
