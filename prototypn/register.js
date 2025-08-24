@@ -1,20 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("register-form");
-  const status = document.getElementById("register-status");
+  const usernameInput = document.getElementById("username");
+  const feedback = document.getElementById("username-feedback");
 
   const felmeddelanden = [
-    "Fel 4102: Lösenordet upptaget... av Röjgen.",
-    "Fel 4238: Ogiltig skostorlek.",
-    "Fel 4377: Röjgen har redan valt den här skostorleken. ",
-    "Fel 4490: Röjgen har redan valt det här efternamnet.",
-    "Fel 4521: En annan användare (Röjgen) skapade just ett konto med det här användarnamnet.",
-    "Fel 4659: Okänt fel inträffade. Vänligen försök igen senare."
+    "Röjgen har redan valt det här användarnamnet. Testa ett annat.",
+    "Tyvärr, Röjgen hann före med just det här namnet.",
+    "Upptaget... av Röjgen.",
+    "Det här namnet är tyvärr redan reserverat av Röjgen."
   ];
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const slump = felmeddelanden[Math.floor(Math.random() * felmeddelanden.length)];
-    status.textContent = slump;
-    status.style.color = "red";
+  usernameInput.addEventListener("input", () => {
+    if (usernameInput.value.trim() !== "") {
+      // slumpa ett meddelande från listan
+      const randomMsg = felmeddelanden[Math.floor(Math.random() * felmeddelanden.length)];
+      feedback.textContent = randomMsg;
+    } else {
+      feedback.textContent = "";
+    }
   });
 });

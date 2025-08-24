@@ -119,7 +119,7 @@ body {
   border: inset 2px #004400;
 }
 #sponsors {
-  margin: 1em;
+  margin: 2em 1em 2em;
   padding: 0 0.5em 0 0.5em;
   background-color: #f9f1dd;
   border: 2px dotted #b89c6f;
@@ -154,7 +154,6 @@ body {
   underline: none;
 }
 
-
 .login-form label {
   display: block;
   margin-top: 10px;
@@ -187,6 +186,68 @@ body {
   padding: 15px;
   border-radius: 5px;
 }
+
+/* Registreringsformuläret */
+.register-module-flash {
+  padding: 20px;
+  background: linear-gradient(to bottom, #e0f0ff, #c0d8f0);
+  border: 2px solid #003366;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+  max-width: 500px;
+  font-family: Verdana, sans-serif;
+  margin: 2em 0 2em;
+}
+
+.register-module-flash h2 {
+  color: #003366;
+  text-shadow: 1px 1px 2px #fff;
+  margin-bottom: 20px;
+}
+
+.register-module-flash input[type="text"],
+.register-module-flash input[type="number"],
+.register-module-flash input[type="password"] {
+  width: 95%;
+  padding: 8px;
+  border: 1px solid #666;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: inset 1px 1px 3px #aaa;
+}
+
+.register-module-flash button {
+  background: linear-gradient(to bottom, #66aaff, #3366cc);
+  border: 1px solid #003366;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px #000;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+
+.register-module-flash button:hover {
+  background: linear-gradient(to bottom, #88ccff, #2255aa);
+}
+
+.feedback {
+  font-size: 0.9em;
+  color: red;
+  margin-top: 5px;
+}
+
+.form-error {
+  margin-top: 15px;
+  color: darkred;
+  font-weight: bold;
+  background: #ffe0e0;
+  border: 1px solid red;
+  padding: 8px;
+  border-radius: 5px;
+}
+
 
 .reklambanner {
   width: 100%;

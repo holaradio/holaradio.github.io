@@ -27,40 +27,32 @@
 
     <div id="content-fp">
       <h2>Skapa nytt konto</h2>
-      <div class="login-module">
-	  <div class="login-form">
-	    <form id="register-form">
-	      <label for="fname">Förnamn:</label>
-	      <input type="text" id="fname" required>
+      Här kan du skapa ett konto i Radio Hôlas helt nya digitala lyssnarnätverk!
+      <div class="register-module-flash">
+	  <form>
+	    <label for="fname">Förnamn:</label><br>
+	    <input type="text" id="fname" name="fname"><br><br>
 	
-	      <label for="lname">Efternamn:</label>
-	      <input type="text" id="lname" required>
+	    <label for="lname">Efternamn:</label><br>
+	    <input type="text" id="lname" name="lname"><br><br>
 	
-	      <label for="username">Önskat användarnamn:</label>
-	      <input type="text" id="username" required>
+	    <label for="username">Önskat användarnamn:</label><br>
+	    <input type="text" id="username" name="username">
+	    <div id="username-feedback" class="feedback"></div>
+	    <br><br>
 	
-	      <label for="shoe">Skostorlek:</label>
-	      <input type="number" id="shoe" required min="20" max="55">
+	    <label for="shoe">Skostorlek:</label><br>
+	    <input type="number" id="shoe" name="shoe"><br><br>
 	
-	      <label for="password">Lösenord:</label>
-	      <input type="password" id="password" required>
+	    <label for="password">Lösenord:</label><br>
+	    <input type="password" id="password" name="password"><br><br>
 	
-	      <button type="submit">Skapa konto</button>
-	    </form>
-	    <p id="register-status"></p>
-	  </div>
-	
-	  <div class="login-side-text">
-	    <h3>Viktigt att veta</h3>
-	    <p>
-	      Att skapa konto i Radio Hôlas system är en komplex procedur.<br>
-	      Alla konton kontrolleras manuellt.
-	    </p>
-	    <p><a href="index.html"><< Tillbaka till startsidan</a></p>
-
-	  </div>
+	    <button type="submit">Skapa konto</button>
+	  </form>
+        <div id="form-error" class="form-error"></div>
 	</div>
-    </div>
+	<a href="index.html">Tillbaka till startsidan! </a>
+     </div>
     
     <div class="reklambanner">
       <img id="banner-img" src="/images/murres_reklam.png" alt="Reklam">
@@ -69,6 +61,25 @@
     <div id="footer">© 2014 Radio Hôla | 68,7 MHz</div>
   </div>
   <script src="reklam.js"></script>
+  <script>
+	   document.addEventListener("DOMContentLoaded", function() {
+	   const form = document.querySelector(".register-module-flash form");
+	   const errorDiv = document.getElementById("form-error");
+
+	  form.addEventListener("submit", function(e) {
+	    e.preventDefault(); 
+	    const felVarianter = [
+	      "Formuläret innehåller 2 fel.",
+	      "Formuläret innehåller 3 fel.",
+	      "Formuläret innehåller fler fel.",
+	      "Formuläret innehåller färre fel."
+	    ];
+	    const slumpFel = felVarianter[Math.floor(Math.random() * felVarianter.length)];
+	    errorDiv.textContent = "Fel: " + slumpFel + " (kod 1978)";
+	  });
+	});
+   </script>
+
 </body>
 </html>
 
