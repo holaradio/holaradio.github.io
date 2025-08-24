@@ -23,16 +23,16 @@
       <a href="kommunen.html">Kommunen</a> |
       <a href="evenemang.html">Evenemangstips</a>
     </div>
-    <div id="content">
+    <div id="content-table">
 	<h2>📻 Veckans programtablå</h2>
-	<button onclick="window.print()" style="margin-bottom: 1em;">🖨️ Skriv ut tablån</button>
+	<button onclick="window.print()" style="margin-bottom: 1em;">🖨️ Skriv ut tablån</button></br>
+	<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Triphonic-turntable_close-up_by_Janek_Schaefer_1997.gif/330px-Triphonic-turntable_close-up_by_Janek_Schaefer_1997.gif" alt="DJ GIF"/>
+
 	<div id="tabla-container">
 	
 	<script>
 		  function renderTabla() {
-		    const dagar = [
-		      "Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"
-		    ];
+		    const dagar = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"];
 		
 		    const container = document.getElementById("tabla-container");
 		    container.innerHTML = "";
@@ -64,7 +64,6 @@
 		  document.addEventListener("DOMContentLoaded", renderTabla);
 	  </script>
 	</div>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Triphonic-turntable_close-up_by_Janek_Schaefer_1997.gif/330px-Triphonic-turntable_close-up_by_Janek_Schaefer_1997.gif" alt="DJ GIF"/>
     </div>
 
     <div id="footer">© 2014 Radio Hôla | 68,7 MHz</div>

@@ -66,13 +66,32 @@ body {
 #content-fp {
   padding: 20px;
 }
+#content-about {
+  padding: 20px;
+  height: 350px;
+}
+#content-table {
+  padding: 20px;
+}
+#content-table li {
+  line-height: 1.6;
+  margin-bottom: 6px;
+}
+
 #kommuninfo {
   padding: 10px;
 }
 .image-left{
-  float:left;
+  float: left;
   margin-right: 15px;
 }
+.about-image{
+  float: left;
+  display: block;
+  width: 35%;
+  margin-right: 10px;
+}
+
 #content img {
   max-width: 75%;
   height: auto;
@@ -86,7 +105,21 @@ body {
 #nuspelas h4{
   margin-left: 0.5em;
 }
+.list li{
+  margin: 0.5em 0 0.5em;
+}
+.kalender-knapp {
+  background-color: #006600;
+  color: white;
+  border: 2px outset #004400;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-family: Verdana, sans-serif;
+}
 
+.kalender-knapp:active {
+  border: inset 2px #004400;
+}
 #sponsors {
   margin: 1em;
   padding: 0 0.5em 0 0.5em;
