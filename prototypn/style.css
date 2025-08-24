@@ -57,7 +57,13 @@ body {
 #nav a:hover {
   text-decoration: underline;
 }
+.rolling-text{
+  margin-top: 0.5em;
+}
 #content {
+  padding: 20px;
+}
+#content-fp {
   padding: 20px;
 }
 #kommuninfo {
@@ -75,14 +81,15 @@ body {
 #nuspelas {
   display:flex;
   align-items:left;
+  padding:20px;
 }
 #nuspelas h4{
   margin-left: 0.5em;
 }
 
 #sponsors {
-  margin-top: 30px;
-  padding: 15px;
+  margin: 1em;
+  padding: 0 0.5em 0 0.5em;
   background-color: #f9f1dd;
   border: 2px dotted #b89c6f;
 }
