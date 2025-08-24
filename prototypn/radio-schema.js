@@ -2,20 +2,107 @@
 
 // 🎙️ Programtablå
 const programSchema = [
+  // Söndag (0)
+  { titel: 'Mjôla i Hôla (repris)', dag: 0, tid: "10:00", duration: "80:00" },
+  { titel: 'En dag med (repris)', dag: 0, tid: "11:30", duration: "45:00" },
+  { titel: 'Musikquizz med Uno Bogg (repris)', dag: 0, tid: "12:15", duration: "90:00" },
+  { titel: 'Hôlas hemligheter (repris)', dag: 0, tid: "13:45", duration: "45:00" },
+  { titel: 'Hôlas historia (repris)', dag: 0, tid: "14:30", duration: "90:00" },
+  { titel: 'Intresseklubben (repris)', dag: 0, tid: "16:00", duration: "45:00" },
+  { titel: 'Filosofiska rummet (repris)', dag: 0, tid: "16:45", duration: "45:00" },
+	
   // Måndag (1)
-  { titel: 'Såga med Torbjernt', dag: 1, tid: "06:00", duration: "60:00" },
-  
+  { titel: 'Såga med Torbjert', dag: 1, tid: "06:00", duration: "1:00" },
+  { titel: 'Hôlamorgon', dag: 1, tid: "07:00", duration: "180:00" },
+  { titel: 'Hôlanyset', dag: 1, tid: "10:00", duration: "5:00" },
+  { titel: 'Evenemangstips', dag: 1, tid: "10:05", duration: "5:00" },
+  { titel: 'Fråga folket', dag: 1, tid: "11:00", duration: "30:00" },
+  { titel: 'Dagens citat', dag: 1, tid: "12:00", duration: "2:00" },
+  { titel: 'En dag med', dag: 1, tid: "13:00", duration: "45:00" },
+  { titel: 'Hôlatrafiken', dag: 1, tid: "14:30", duration: "3:00" },
+  { titel: 'Hôlanyset', dag: 1, tid: "15:00", duration: "5:00" },
+  { titel: 'Filmtips med Rogert Roggmeister', dag: 1, tid: "15:30", duration: "90:00" },
+  { titel: 'Avslappning med Bengt', dag: 1, tid: "17:45", duration: "10:00" },
+  { titel: 'Bypuls', dag: 1, tid: "18:15", duration: "3:00" },
+  { titel: 'Mjôla i Hôla', dag: 1, tid: "18:18", duration: "40:00" },
+  { titel: 'Hôlanyset', dag: 1, tid: "19:00", duration: "5:00" },
+  { titel: 'Kvällsmackan med Stutbjörn', dag: 1, tid: "19:15", duration: "90:00" },
+	
   // Tisdag (2)
-  { titel: 'Fråga folket', dag: 2, tid: "14:07", duration: "10:00" },
+  { titel: 'Såga med Torbjert', dag: 2, tid: "06:00", duration: "1:00" },
+  { titel: 'Hôlamorgon', dag: 2, tid: "07:00", duration: "180:00" },
+  { titel: 'Hôlanyset', dag: 2, tid: "10:00", duration: "5:00" },
+  { titel: 'Kommunkvarten', dag: 2, tid: "10:05", duration: "10:00" },
+  { titel: 'Filosofiska rummet', dag: 2, tid: "11:00", duration: "30:00" },
+  { titel: 'Dagens citat', dag: 2, tid: "12:00", duration: "2:00" },
+  { titel: 'Intresseklubben', dag: 2, tid: "13:00", duration: "45:00" },
+  { titel: 'Hôlatrafiken', dag: 2, tid: "14:30", duration: "3:00" },
+  { titel: 'Hôlanyset', dag: 2, tid: "15:00", duration: "5:00" },
+  { titel: 'Hôlas historia', dag: 2, tid: "15:30", duration: "90:00" },
+  { titel: 'Avslappning med Bengt', dag: 2, tid: "17:45", duration: "10:00" },
+  { titel: 'Bypuls', dag: 2, tid: "18:15", duration: "3:00" },
+  { titel: 'Quizza med Qvartluss', dag: 2, tid: "18:18", duration: "40:00" },
+  { titel: 'Hôlanyset', dag: 2, tid: "19:00", duration: "5:00" },
+  { titel: 'Kvällsmackan med Stutbjörn', dag: 2, tid: "19:15", duration: "90:00" },
    
   // Onsdag (3)
-  { titel: 'Hôla-nyset', dag: 3, tid: "15:37", duration: "5:43" },
+  { titel: 'Såga med Torbjert', dag: 3, tid: "06:00", duration: "1:00" },
+  { titel: 'Hôlamorgon', dag: 3, tid: "07:00", duration: "180:00" },
+  { titel: 'Hôlanyset', dag: 3, tid: "10:00", duration: "5:00" },
+  { titel: 'Hur gör djur', dag: 3, tid: "10:05", duration: "10:00" },
+  { titel: 'Fråga folket', dag: 3, tid: "11:00", duration: "30:00" },
+  { titel: 'Dagens citat', dag: 3, tid: "12:00", duration: "2:00" },
+  { titel: 'Hôlas hemligheter', dag: 3, tid: "13:00", duration: "45:00" },
+  { titel: 'Hôlatrafiken', dag: 3, tid: "14:30", duration: "3:00" },
+  { titel: 'Hôlanyset', dag: 3, tid: "15:00", duration: "5:00" },
+  { titel: 'Bobbe och Bultens jobbdagbok', dag: 3, tid: "15:30", duration: "90:00" },
+  { titel: 'Avslappning med Bengt', dag: 3, tid: "17:45", duration: "10:00" },
+  { titel: 'Bypuls', dag: 3, tid: "18:15", duration: "3:00" },
+  { titel: 'Antikviteter med Göran', dag: 3, tid: "18:18", duration: "42:00" },
+  { titel: 'Hôlanyset', dag: 3, tid: "19:00", duration: "5:00" },
+  { titel: 'Kvällsmackan med Stutbjörn', dag: 3, tid: "19:15", duration: "90:00" },
+
+  // Torsdag (4)
+  { titel: 'Såga med Torbjert', dag: 4, tid: "06:00", duration: "1:00" },
+  { titel: 'Hôlamorgon', dag: 4, tid: "07:00", duration: "180:00" },
+  { titel: 'Hôlanyset', dag: 4, tid: "10:00", duration: "5:00" },
+  { titel: 'Listan med Grob Bakaxel', dag: 4, tid: "10:05", duration: "10:00" },
+  { titel: 'Filosofiska rummet', dag: 4, tid: "11:00", duration: "30:00" },
+  { titel: 'Dagens citat', dag: 4, tid: "12:00", duration: "2:00" },
+  { titel: 'Vandring med Gregon till den andra sidan', dag: 4, tid: "13:00", duration: "45:00" },
+  { titel: 'Hôlatrafiken', dag: 4, tid: "14:30", duration: "3:00" },
+  { titel: 'Hôlanyset', dag: 4, tid: "15:00", duration: "5:00" },
+  { titel: 'Survivor Hôla', dag: 4, tid: "15:30", duration: "90:00" },
+  { titel: 'Avslappning med Bengt', dag: 4, tid: "17:45", duration: "10:00" },
+  { titel: 'Bypuls', dag: 4, tid: "18:15", duration: "3:00" },
+  { titel: 'Quizza med Qvartluss', dag: 4, tid: "18:18", duration: "40:00" },
+  { titel: 'Hôlanyset', dag: 4, tid: "19:00", duration: "5:00" },
+  { titel: 'Kvällsmackan med Stutbjörn', dag: 4, tid: "19:15", duration: "90:00" },
 
   // Fredag (5)
-  { titel: 'Hôlas hemligheter', dag: 5, tid: "10:00", duration: "45:00" },
+  { titel: 'Såga med Torbjert', dag: 5, tid: "06:00", duration: "1:00" },
+  { titel: 'Hôlamorgon', dag: 5, tid: "07:00", duration: "180:00" },
+  { titel: 'Hôlanyset', dag: 5, tid: "10:00", duration: "5:00" },
+  { titel: 'Hur gör djur', dag: 5, tid: "10:05", duration: "10:00" },
+  { titel: 'Fråga folket', dag: 5, tid: "11:00", duration: "30:00" },
+  { titel: 'Dagens citat', dag: 5, tid: "12:00", duration: "2:00" },
+  { titel: 'Orvban på vift', dag: 5, tid: "13:00", duration: "45:00" },
+  { titel: 'Hôlatrafiken', dag: 5, tid: "14:30", duration: "3:00" },
+  { titel: 'Hôlanyset', dag: 5, tid: "15:00", duration: "5:00" },
+  { titel: 'Musikquiz med Uno Bogg', dag: 5, tid: "15:30", duration: "90:00" },
+  { titel: 'Avslappning med Bengt', dag: 5, tid: "17:45", duration: "10:00" },
+  { titel: 'Bypuls', dag: 5, tid: "18:15", duration: "3:00" },
+  { titel: 'Mjôla i Hôla', dag: 5, tid: "18:18", duration: "40:00" },
+  { titel: 'Veckan i backspegeln', dag: 5, tid: "19:00", duration: "10:00" },
+  { titel: 'Kvällsmackan med Stutbjörn', dag: 5, tid: "19:15", duration: "90:00" },
+  { titel: 'Surr på Sunkens', dag: 5, tid: "21:30", duration: "150:00" },
 
   // Lördag (6)
-  { titel: 'Survivor', dag: 6, tid: "09:00", duration: "20:00" },
+  { titel: 'Lördagskaffe med Karotus och gäster', dag: 6, tid: "09:00", duration: "180:00" },
+  { titel: 'Fråga folket (repris)', dag: 6, tid: "15:00", duration: "90:00" },
+  { titel: 'Survivor Hôla (repris)', dag: 6, tid: "17:00", duration: "90:00" },
+  { titel: 'Bobbe och Bultens jobbdagbok (repris)', dag: 6, tid: "18:45", duration: "90:00" },
+  { titel: 'Lördagsvinylen i vinkylen med Uno Bogg och gäster', dag: 6, tid: "21:00", duration: "180:00" },
 ];
 
 // 🎵 Slumpbara låtar vid mellanspel
@@ -77,7 +164,7 @@ function visaNuSpelas() {
 
   const ärFredag = dag === 5;
   const ärLördag = dag === 6;
-  const maxTid = (ärFredag || ärLördag) ? 1440 : 1440; // Fredag/lördag sändning dygnet runt
+  const maxTid = (ärFredag || ärLördag) ? 1440 : 1260; // Fredag/lördag sändning dygnet runt
   const sändningPågår = nuMin >= 360 && nuMin < maxTid;
 
   if (!sändningPågår) {
