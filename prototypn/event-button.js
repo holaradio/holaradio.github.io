@@ -3,10 +3,10 @@
 	
 	  knappar.forEach(knapp => {
 	    knapp.addEventListener("click", () => {
-	      if (knapp.textContent === "Lägg till i kalender") {
-	        knapp.textContent = "Tillagd";
+	      if (knapp.textContent === "Lägg till i min kalender") {
+	        knapp.textContent = "Tillagd i din kalender!";
 	      } else {
-	        knapp.textContent = "Lägg till i kalender";
+	        knapp.textContent = "Lägg till i min kalender";
 	      }
 	    });
 	  });
