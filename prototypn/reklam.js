@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const banners = [
     "/images/murres_reklam.png",
-    "/images/dustmanns_reklam.png"  
+    "/images/dustmanns_reklam.png",
+    "/images/ewerts_reklam.png"
   ];
 
   const bannerImg = document.getElementById("banner-img");
