@@ -11,22 +11,30 @@ body {
   max-width: 52rem;
   width: 95vw;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
   border: 0.2em double #755c28;
   background-color: #d5ffff;
   box-shadow: 0 0 0.7em #c4b998;
-  padding: 1.5em 1em;
+  padding: 0; /* Remove horizontal padding */
 }
 
 #header {
   background-image: url("../images/header.png");
   background-size: cover;
-  min-height: 8em;
+  min-height: 11em; 
+  width: 100%;
   display: flex;
   align-items: center;
   font-family: 'Garamond', serif;
   border-bottom: 0.15em solid #a3853a;
-  padding: 1em;
+  padding: 0; /* Remove padding to avoid space */
   gap: 1em;
+}
+
+#header > * {
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 #header h1 {
@@ -37,7 +45,7 @@ body {
   border-radius: 0.5em;
   color: #000;
   font-weight: bold;
-  font-size: 2.5em;
+  font-size: 2.2em;
   margin: 0;
 }
 
@@ -48,23 +56,32 @@ body {
 
 .logo {
   display: block;
-  height: 3em;
-  margin: 0.5em 1em 0.5em 0.7em;
+  height: 7em;
+  margin: 0.5em 0.2em 0.5em 0;
   max-width: 100%;
 }
 
 #nav {
   background-color: #42019c;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  flex: 0 0 auto;
   color: #dcb9ad;
-  padding: 0.8em;
+  padding: 0; /* Remove padding to avoid space */
   font-family: Georgia, serif;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5em;
 }
 
+#nav > * {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
 #nav a {
-  margin: 0 0.7em;
+  margin: 0 0.3em;
   color: #d5ffff;
   text-decoration: none;
   font-weight: bold;
@@ -161,28 +178,26 @@ body {
   border: 0.15em dotted #b89c6f;
 }
 
-/* Modul för inloggningen */
 .login-module {
   display: flex;
   align-items: flex-start;
   gap: 2em;
-  margin: 2em 0;
-  flex-wrap: wrap;
+  margin: 2em 1em;
+  flex-wrap: nowrap;
 }
 
-/* Loginformulär */
 .login-form {
+  width: 18em;
+  min-width: 12em;
+  max-width: 100%;
+  /* Remove width: 100% if present */
   background: #00334d;
   color: #d5ffff;
   padding: 1em;
   border: 0.15em solid #0099cc;
   border-radius: 0.3em;
-  width: 18em;
   box-shadow: 0.15em 0.15em 0.5em #000;
   text-align: left;
-  min-width: 12em;
-  max-width: 100%;
-  box-sizing: border-box;
 }
 
 .login-form h2 {
@@ -220,11 +235,11 @@ body {
   border: 0.15em inset #004400;
 }
 
-/* Sidotexten */
 .login-side-text {
   max-width: 25em;
-  background: rgba(255, 255, 255, 0.05);
+  width: auto; 
   padding: 1em;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 0.3em;
   font-size: 1em;
 }
@@ -237,9 +252,10 @@ body {
   border-radius: 0.7em;
   box-shadow: 0.15em 0.15em 0.5em rgba(0,0,0,0.4);
   max-width: 32em;
+  width: 100%;
+  box-sizing: border-box;
   font-family: Verdana, sans-serif;
   margin: 2em 0;
-  box-sizing: border-box;
 }
 
 .register-module-flash h2 {
@@ -258,6 +274,9 @@ body {
   background: #fff;
   box-shadow: inset 0.07em 0.07em 0.2em #aaa;
   font-size: 1em;
+  box-sizing: border-box; /* Prevent overflow */
+  min-width: 0;
+  max-width: 100%;
 }
 
 .register-module-flash button {
@@ -296,13 +315,13 @@ body {
 
 .reklambanner {
   width: 100%;
-  height: 7vw;
   min-height: 3em;
   max-height: 7em;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1em;
+  box-sizing: border-box; /* Ensures padding/border don't cause overflow */
 }
 
 .reklambanner img {
@@ -341,51 +360,46 @@ h3 {
 /*---------------------Radio------------------*/
 .radio-player {
   width: 100%;
-  max-width: 21em;
-  background: #1a1a1a;
-  border: 0.13em groove #444;
-  border-radius: 0.4em;
+  max-width: 25em;
   padding: 0.8em;
-  font-family: "Verdana", sans-serif;
-  font-size: 1em;
-  color: #0f0;
-  box-shadow: 0.13em 0.13em 0.7em rgba(0, 255, 0, 0.1);
+  font-size: 1.1em;
   margin: 1em 0;
-  box-sizing: border-box;
+  border-radius: 0.32em;
+  background: #1a1a1a !important;
+  background-color: #1a1a1a !important;
+  opacity: 1 !important;
 }
 
 .radio-player-header {
-  background: #333;
-  color: #0f0;
-  font-weight: bold;
   padding: 0.4em;
-  border-radius: 0.3em;
-  text-align: center;
+  color:#0f0;
+  border-radius: 0.25em;
   margin-bottom: 0.7em;
   text-shadow: 0.07em 0.07em 0.13em #000;
   border: 0.07em inset #555;
-  font-family: monospace;
   font-size: 1.1em;
 }
 
 .radio-controls {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1em;
   gap: 0.5em;
+  flex-wrap: wrap; 
 }
 
 .radio-controls .btn {
-  background: #222;
-  border: 0.07em solid #666;
-  border-radius: 0.2em;
+  min-width: 3em;
+  flex: 1 1 3em;
   padding: 0.3em 0.6em;
+  border: 0.07em solid #666;
+  border-radius: 0.18em;
+  font-size: 1em;
+  background: #222;
   color: #0f0;
   font-weight: bold;
   font-family: monospace;
   cursor: pointer;
   transition: background 0.2s;
-  font-size: 1em;
 }
 
 .radio-controls .btn:hover {
@@ -396,25 +410,19 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: end;
-  height: 2em;
-  margin-bottom: 0.8em;
+  height: 1.6em;
+  margin-bottom: 0.7em;
 }
 
 .radio-eq-bars .bar {
-  width: 0.3em;
+  width: 0.25em;
   background: limegreen;
   animation: eq-flicker 1s infinite;
 }
 
-.bar1 { animation-delay: 0s; }
-.bar2 { animation-delay: 0.2s; }
-.bar3 { animation-delay: 0.4s; }
-.bar4 { animation-delay: 0.1s; }
-.bar5 { animation-delay: 0.3s; }
-
 @keyframes eq-flicker {
   0%, 100% { height: 0.5em; }
-  50% { height: 1.7em; }
+  50% { height: 1.4em; }
 }
 
 .radio-status {
@@ -456,28 +464,35 @@ h3 {
     padding: 0.5em 0.2em;
   }
   #header {
-    min-height: 5em;
+    min-height: 6em; 
     font-size: 1em;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center; 
+    justify-content: center;
     padding: 0.5em;
     gap: 0.5em;
+    text-align: center; 
+    width: 100%;
+    box-sizing: border-box; 
   }
   #header h1 {
     font-size: 1.3em;
     padding: 0.2em 0.5em;
+    text-align: center;
+    margin: 0 auto;
   }
   .logo {
-    height: 2em;
-    margin: 0.5em 0.5em 0.5em 0;
+    height: 6em;
+    margin: 0.5em auto 0.5em auto; 
+    display: block;
   }
   #nav {
-    padding: 0.5em;
+    padding: 1em;
     font-size: 1em;
     gap: 0.3em;
   }
   #nav a {
-    margin: 0 0.3em;
+    margin: 0 0.1em;
     font-size: 1em;
   }
   #content,
@@ -496,9 +511,11 @@ h3 {
     max-width: 100%;
   }
   .login-module {
-    flex-direction: column;
-    gap: 0.7em;
-    margin: 0.7em 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 2em;
+    margin: 2em 0.2em 2em 0.2em; 
+    flex-wrap: wrap;
   }
   .login-form,
   .register-module-flash {
@@ -521,6 +538,8 @@ h3 {
     padding: 0.5em;
   }
   .radio-player {
+    background: #1a1a1a;
+    background-color: #1a1a1a;
     width: 100vw;
     min-width: 0;
     max-width: 100vw;
