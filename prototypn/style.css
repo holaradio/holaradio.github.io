@@ -114,9 +114,11 @@ body {
   cursor: pointer;
   font-family: Verdana, sans-serif;
 }
-
 .kalender-knapp:active {
   border: inset 2px #004400;
+}
+.kalender-knapp.tabort {
+  background-color: #b40500;
 }
 #sponsors {
   margin: 2em 1em 2em;
