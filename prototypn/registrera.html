@@ -16,14 +16,11 @@
 
 
     <div id="nav">
-      <a href="index.html">Start</a>
-      <a href="program.html">Program</a>
-      <a href="om-oss.html">Om Oss</a>
-      <a href="lyssna.html">Lyssna Live</a>
-      <a href="kontakt.html">Kontakt</a>
-      <a href="kommunen.html">Kommunen</a>
-      <a href="evenemang.html">Evenemangstips</a>
-
+      <script>
+        fetch('nav.html')
+          .then(response => response.text())
+          .then(html => document.getElementById('nav').innerHTML = html);
+      </script>
     </div>
 
     <div id="content-fp">

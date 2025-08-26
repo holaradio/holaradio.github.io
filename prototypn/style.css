@@ -143,7 +143,7 @@ body {
 
 #nuspelas {
   display: flex;
-  align-items: center; /* Vertically center children */
+  align-items: center; 
   gap: 1em;
   padding: 1.5em 1em;
 }
