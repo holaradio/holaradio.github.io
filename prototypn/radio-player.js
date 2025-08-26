@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (pauseButton) {
     pauseButton.addEventListener("click", () => {
-      statusText.textContent = "Fel: Du kan inte pausa tystnad (kod 5719). Du måste starta strömmen först.";
+      statusText.textContent = "Fel: Om du vill pausa tystnaden måste du först låta strömmen flöda (kod 5719). ";
     });
   }
   
