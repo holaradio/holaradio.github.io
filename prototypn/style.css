@@ -1,0 +1,14 @@
+body {
+    background-color:#eb5424;
+}
+
+p {
+    color: #fff;
+    font-size: 3vw;
+    text-align: center;
+}
+
+img.logo {
+    max-width: 100%;
+    height: auto;
+}
