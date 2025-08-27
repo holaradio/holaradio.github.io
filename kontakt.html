@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radio Hôla - Kontakt</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="wrapper">
+     <div id="header">
+      <a href="/prototypn" class="logo-a"><img src="/images/radiohola.png" alt="Radio Hôlas logotype"  srcset="/images/radiohola.svg" class="logo"/></a>
+      <h1>Kontakta oss!</h1>
+    </div>
+
+
+    <div id="nav">
+      <script>
+        fetch('nav.html')
+          .then(response => response.text())
+          .then(html => document.getElementById('nav').innerHTML = html);
+      </script>
+    </div>
+
+    <div id="content">
+      <h2>Kontakta oss</h2>
+      Har ni ett spännande programförslag? Ett gott omdöme om något av våra många program? En önskelåt? Tveken icke! Skriv ett meddelande och skicka in det till oss!
+      <p></p>
+      <form action="mailto:lokalradiohola@gmail.com" method="post" enctype="text/plain">
+        Namn:<br><input type="text" name="name"><br>
+        E-post:<br><input type="text" name="email"><br>
+        Meddelande:<br><textarea name="message" rows="5" cols="40"></textarea><br><br>
+        <input type="submit" value="Skicka">
+        <input type="reset" value="Rensa">
+      </form>
+    </div>
+    <div class="reklambanner">
+      <img id="banner-img" src="/images/murres_reklam2.jpg" alt="Reklam">
+    </div>
+
+
+    <div id="footer">© 2014 Radio Hôla | 68,7 MHz</div>
+  </div>
+  <script src="js/reklam.js"></script>
+</body>
+</html>
