@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radio Hôla - Om Oss</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="wrapper">
+     <div id="header">
+      <a href="/prototypn" class="logo-a"><img src="/images/radiohola.png" alt="Radio Hôlas logotype"  srcset="/images/radiohola.svg" class="logo"/></a>
+      <h1>Om oss</h1>
+     </div>
+
+
+    <div id="nav">
+      <script>
+        fetch('nav.html')
+          .then(response => response.text())
+          .then(html => document.getElementById('nav').innerHTML = html);
+      </script>
+    </div>
+
+    <div id="content-about">
+      <h2>Vilka är vi?</h2>
+      <img src="/images/radiohuset.jpg" class="about-image"/>
+      <p>
+       Radio Hôla grundades 1965 av de två vännerna Bo-Klas Vört och Pejr Yrvelström; den senare far till Bengt Yrvelström som fortfarande hörs i etern och som dessutom är ordförande i föreningen Radio Hôla.
+      </p>
+      <p>
+       I dag drivs radiostationen vidare av 10 anställda och flertalet frivilliga entusiaster. Verksamheten finansieras dels av bidrag från våra sponsorer, dels av kommunala medel. Vårt fina radiohus ligger på Masonitgatan 89, i samma hus som restaurang Hôlet. Därifrån sänder vi live varje dag, förutom på söndagar (reprisdag).
+      </p>
+      <p>
+        Vårt mål: att tillhandahålla högkvalitativ radio till invånarna i Hôla med omnejd. Och snart - när Rootmar ordnat med webbradio - också till <i>världen</i> med omnejd.
+      </p>
+      <p>(Fotot ovan, föreställande vårt vackra radiohus, är taget av den välkände och -renomerade forskaren Dr. Prasutagus K. Bálanbéna i samband med hans senaste besök i Hôla år 1987.)</p>
+    </div>
+    <div class="reklambanner">
+      <img id="banner-img" src="/images/murres_reklam2.jpg" alt="Reklam">
+    </div>
+
+    <div id="footer">© 2014 Radio Hôla | 68,7 MHz</div>
+  </div>
+  <script src="js/reklam.js"></script>
+</body>
+</html>

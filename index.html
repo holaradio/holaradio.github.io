@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radio Hôla – Start</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/radio-schema.js"></script>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="header">
+      <a href="/prototypn" class="logo-a"><img src="/images/radiohola.png" alt="Radio Hôlas logotype"  srcset="/images/radiohola.svg" class="logo"/></a>
+      <h1>Mer lokalt kan det inte bli!</h1>
+    </div>
+
+    <div id="nav">
+      <script>
+        fetch('nav.html')
+          .then(response => response.text())
+          .then(html => document.getElementById('nav').innerHTML = html);
+      </script>
+    </div>
+    
+    <marquee behavior="scroll" direction="left" scrollamount="4" class="rolling-text">
+        🎉 Välkommen till Radio Hôla – 68,7 MHz från hjärtat av Hôlabygden 🎉
+    </marquee>
+
+     <div id="content-fp">
+        <h2>Välkommen till Radio Hôla!</h2>
+        <p>
+           Sedan starten har vi sänt direkt från vår studio i Hôlas nästan nya radiohus, som ligger så gott som mitt i utkanten av Hôla. 
+           Med örat mot etern och hjärtat i bypulsen erbjuder vi en fantastisk blandning av musik och intressanta program.    
+        </p>
+        <p>
+           Programutbudet är extremt brett och vi sänder, för att nämna några exempel: realityradio, dokumentärer, frågesport, livesågning med Torbjernt, och intervjuer - både på byn och i studion. När det kommer till musik spelar vi endast lokala artister. I Hôla blir det som bekant aldrig tråkigt och det blir det inte i den hôlianska etern heller. 
+           Oavsett om du lyssnar under morgonkaffet, bordet eller på Murres så finns vi där – med värme, humor och det ena och det andra.      
+        </p>
+        <p>
+           Vi tror på analog själ i en digital värld. Välkommen in i värmen. Radio Hôla - mer lokalt kan det inte bli!
+        </p>
+     </div>
+     <div id="nuspelas">
+		  <img src="/images/gammalradio.gif" alt="Radio" width="50">
+	    <!-- Nu spelas-funktionen -->
+	    <h4 class="blink" id="nu-spelas">🎶 Nu spelas: laddar...</h4>
+     </div>     
+     <!-- Sponsorer -->
+     <div id="sponsors">
+        <h3>Våra stolta sponsorer:</h3>
+        <ul>
+          <li>Dustmanns Däck & Dojor - Vi fixar sulorna till dig och din bil!</li>
+          <li>KBs gym</li>
+          <li>Bullens snabbköp</li>
+          <li>Murres</li>
+          <li>Ewerts låda (tidigare Ewerts blomlåda)</li>
+        </ul>
+     </div>
+    
+     <div class="login-module">
+	  
+	  <div class="login-form">
+	    <h2>Logga in</h2>
+	    <form id="loginForm">
+	      <label for="username">Användarnamn:</label>
+	      <input type="text" id="username" required>
+	
+	      <label for="password">Lösenord:</label>
+	      <input type="password" id="password" required>
+	
+	      <button type="submit">Logga in</button>
+	    </form>
+	    <p id="login-status"></p>
+	    <p><a href="registrera.html">Skapa nytt konto</a></p>
+	  </div>
+
+	  <div class="login-side-text">
+		    <h3>Information</h3>
+		    <p>
+		      Här kan du logga in i Radio Hôlas nya digitala lyssnarnätverk.
+		    </p>
+		    <p>
+		      När du har loggat in kan du diskutera våra program, skicka in frågor till "Fråga folket", ta del av extramaterial eller varför inte spela något av våra roliga Flash-spel?
+		    </p>
+		    <p>
+		      Om du inte har ett konto kan du skapa ett nytt genom att trycka på länken "Skapa nytt konto" till vänster.
+		    </p>
+        </div>
+	</div>
+      
+     <div class="reklambanner">
+        <img id="banner-img" src="/images/murres_reklam2.jpg" alt="Reklam">
+     </div>
+
+   
+    <div id="footer">
+      © 2014 Radio Hôla | 68,7 Mhz
+    </div>
+    
+  </div>
+  <script src="js/reklam.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>
