@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const banners = [
     "/images/murres_reklam2.jpg",
     "/images/dustmanns_reklam.png",
+    "/images/bullens_reklam.jpg",
     "/images/ewerts_reklam.png"
   ];
 
