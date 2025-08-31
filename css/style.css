@@ -395,6 +395,10 @@ h3 {
   margin-top: 1.5em;
 }
 
+#content-table h3 {
+  text-decoration: dotted;
+}
+
 .blink {
   animation: blink-animation 1.2s steps(2, start) infinite;
 }
