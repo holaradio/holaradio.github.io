@@ -1,6 +1,4 @@
-// radio-schema.js
-
-// 🎙️ Programtablå
+// Programtablå
 const programSchema = [
   // Måndag (0)
   { titel: 'Såga med Torbjert', dag: 0, tid: "06:00", duration: "1:00" },
@@ -107,7 +105,7 @@ const programSchema = [
 
 ];
 
-// 🎵 Slumpbara låtar vid mellanspel
+// Slumpbara låtar 
 const låtbibliotek = [
     { titel: '"Here I was" – Hairsmoke', duration: "4:10" },
 	  { titel: '"Why was I here?" – Hairsmoke', duration: "3:25" },
@@ -136,7 +134,7 @@ const låtbibliotek = [
        { titel: '"VHS Visioner" – Retro-Rut', duration: "3:30" }
 ];
 
-// ⏱ Hjälpfunktioner
+// Hjälpfunktioner
 function parseTime(str) {
   const [h, m] = str.split(":").map(Number);
   return h * 60 + m;
@@ -153,7 +151,7 @@ function formatSekunder(s) {
   return `${min}:${sek}`;
 }
 
-// 🎧 Visar nuvarande spelning
+// Nuvarande spelning
 function visaNuSpelas() {
   const nu = new Date();
   const dag = (nu.getDay() + 6) % 7; // 0 = Måndag
@@ -175,7 +173,7 @@ function visaNuSpelas() {
     return;
   }
 
-  // 🎙️ Kontrollera om program pågår
+  // Kontrollera om program pågår
   const aktivtProgram = programSchema.find(item => {
     if (item.dag !== dag) return false;
     const start = parseTime(item.tid);
@@ -189,7 +187,7 @@ function visaNuSpelas() {
     return;
   }
 
-  // 🎵 Hantera låtspelning
+  // Hantera låtspelning
   const sparad = localStorage.getItem("aktuellLåt");
   if (sparad) {
     const { titel, startTid, duration } = JSON.parse(sparad);
@@ -203,7 +201,7 @@ function visaNuSpelas() {
     }
   }
 
-  // 🎵 Slumpa ny låt
+  // Slumpa ny låt
   const nyLåt = låtbibliotek[Math.floor(Math.random() * låtbibliotek.length)];
   const lagra = {
     titel: nyLåt.titel,
@@ -214,6 +212,6 @@ function visaNuSpelas() {
   element.textContent = `🎵 Nu spelas: ${nyLåt.titel} (${nyLåt.duration} kvar)`;
 }
 
-// 🔁 Uppdatera var 10:e sekund
+// Uppdatera var 10000 ms
 setInterval(visaNuSpelas, 10000);
 window.onload = visaNuSpelas;
