@@ -1,0 +1,22 @@
+.webcam-container {
+  width: 420px;
+  margin: 20px auto;
+  border: 2px solid #333;
+  background: #000;
+  font-family: "Courier New", monospace;
+  color: #0f0; /* grön text för retro look */
+  box-shadow: 3px 3px 10px rgba(0,0,0,0.6);
+}
+
+.webcam-frame img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.webcam-status {
+  padding: 5px 10px;
+  font-size: 14px;
+  border-top: 1px solid #333;
+  background: #111;
+}
