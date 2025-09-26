@@ -1,10 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const images = [
-    "bilder/skog1.jpg",
-    "bilder/skog2.jpg",
-    "bilder/skog3.jpg",
-    "bilder/skog4.jpg"
-  ];
+  const images = ["images/skog.jpg"];
 
   const webcamImage = document.getElementById("webcam-image");
   const statusDiv = document.getElementById("webcam-status");
