@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const statusDiv = document.getElementById("webcam-status");
 
   const baseImage = new Image();
-  baseImage.src = "images/skog.jpeg"; 
+  baseImage.src = "images/stubbe.jpg"; 
   const updateInterval = 20000; 
   const fps = 2000;
 
