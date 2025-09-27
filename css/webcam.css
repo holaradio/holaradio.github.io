@@ -1,22 +1,48 @@
-.webcam-container {
-  width: 420px;
-  margin: 20px auto;
-  border: 2px solid #333;
-  background: #000;
-  font-family: "Courier New", monospace;
-  color: #0f0; /* grön text för retro look */
-  box-shadow: 3px 3px 10px rgba(0,0,0,0.6);
+ body {
+    background-color: black;
+    color: white;
+    font-family: "Courier New", monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+h1 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #fff;
+    text-shadow: 0 0 4px #0f0;
 }
 
-.webcam-frame img {
-  width: 100%;
-  height: auto;
-  display: block;
+#webcam-container {
+    display: block;
+    margin: 0 auto;
+    border: 2px solid #444;
+    background: #000;
 }
 
-.webcam-status {
-  padding: 5px 10px;
-  font-size: 14px;
-  border-top: 1px solid #333;
-  background: #111;
+#webcam-status {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.back-button {
+    margin: 20px auto;
+    display: block;
+    padding: 8px 16px;
+    font-size: 14px;
+    background: #222;
+    color: #0f0;
+    border: 2px solid #0f0;
+    cursor: pointer;
+    font-family: "Courier New", monospace;
+}
+.back-button:hover {
+    background: #0f0;
+    color: #000;
 }
