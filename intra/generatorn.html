@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radio Hôla – Generatorn</title>
+  <link rel="stylesheet" href="../css/style2.css">
+  <link rel="stylesheet" href="../css/generatorn.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <script>
+    (function(){
+      function getCookie(name){
+        const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+        return m ? decodeURIComponent(m[2]) : null;
+      }
+      // cookie name must match whatever you set on successful login (e.g. 'auth')
+      const auth = getCookie('auth');
+      if (!auth) {
+        // not logged in -> redirect to contact/login page
+        location.replace('../kontakt.html');
+      }
+      if (auth && auth.length < 8) location.replace('../kontakt.html');
+    })();
+  </script>
+
+  <div id="wrapper">
+    <div id="header">
+      <a href="/" class="logo-a"><img src="/images/radiohola2.png" alt="Radio Hôlas logotype" srcset="../images/radiohola_intra.svg" class="logo"/></a>
+      <h1>Generatorn</h1>
+    </div>
+
+    <div id="nav">
+      <script>
+        fetch('nav.html')
+          .then(response => response.text())
+          .then(html => document.getElementById('nav').innerHTML = html);
+      </script>
+    </div>
+     <div id="content-fp">
+       <div id="root"></div>
+    <script type="text/babel">
+      const { useState } = React;
+
+      const nameData = {
+        "Hôla": {
+          forled: ["Halv", "Tork", "Lind", "Älv", "Verm", "Kast", "Jöns", "Olof"],
+          efterled: ["sten", "bjärn", "vard", "mund", "löv", "mar", "gäst", "lin"],
+          surnameForled: ["Backe", "Klint", "Damm", "Eke", "Råg", "Nor", "Sval", "Täpp", "Glim", "Brun", "Krum", "Ängs", "Gull", "Knarr"],
+          surnameEfterled: ["lund", "ås", "gren", "ström", "hult", "hed", "klyft", "säter", "run", "dal", "näver", "bleck", "själl", "krans"]
+        },
+        "Gruvvik": {
+          forled: ["Gräv", "Snor", "Karg", "Skruv", "Mjöl", "Rämm", "Bryn", "Trul"],
+          efterled: ["torp", "grim", "näs", "benn", "lek", "varg", "hult", "kvist"],
+          surnameForled: ["Sten", "Grå", "Rost", "Kol", "Skarn", "Malm", "Sot", "Järn", "Bläster", "Gruv", "Flint", "Bränt", "Skrubb", "Tjär"],
+          surnameEfterled: ["häll", "myr", "vik", "strup", "sjö", "näs", "gång", "grop", "blot", "slug", "svalg", "brink", "fäll", "råk"]
+        }
+      };
+
+      function getRandomElement(array) {
+        return array[Math.floor(Math.random() * array.length)];
+      }
+
+      function NameGenerator() {
+        const [village, setVillage] = useState("Hôla");
+        const [generatedName, setGeneratedName] = useState("");
+        const [generatedSurname, setGeneratedSurname] = useState("");
+        const [showSurnameOption, setShowSurnameOption] = useState(false);
+        const [history, setHistory] = useState([]);
+
+        const generateName = () => {
+          const forled = getRandomElement(nameData[village].forled);
+          const efterled = getRandomElement(nameData[village].efterled);
+          const name = forled + efterled;
+          setGeneratedName(name);
+          setGeneratedSurname("");
+          setShowSurnameOption(true);
+          setHistory((prev) => [...prev, name]);
+        };
+
+        const generateSurname = () => {
+          const forled = getRandomElement(nameData[village].surnameForled);
+          const efterled = getRandomElement(nameData[village].surnameEfterled);
+          const surname = forled + efterled;
+          const full = `${generatedName} ${surname}`.trim();
+          setGeneratedSurname(surname);
+          setHistory((prev) => [...prev.slice(0, -1), full]);
+        };
+
+        const downloadHistory = () => {
+          const date = new Date().toISOString().slice(0, 10);
+          const fileName = `namnhistorik_${village}_${date}.txt`;
+          const blob = new Blob([history.join("\n")], { type: "text/plain" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = fileName;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        };
+
+        const fullName = `${generatedName}${generatedSurname ? " " + generatedSurname : ""}`;
+
+        return (
+          <div className="container" style={{ maxWidth: "600px", margin: "0 auto" }}>
+            <h1>Namngenerator</h1>
+            <select value={village} onChange={(e) => setVillage(e.target.value)}>
+              <option value="Hôla">Hôla</option>
+              <option value="Gruvvik">Gruvvik</option>
+            </select>
+            <br />
+            <button onClick={generateName}>Generera förnamn</button>
+            {generatedName && (
+              <div className="card">
+                <div className="text-xl font-semibold">
+                  {fullName}
+                </div>
+              </div>
+            )}
+            {showSurnameOption && !generatedSurname && (
+              <button onClick={generateSurname}>Lägg till ett efternamn</button>
+            )}
+            {history.length > 0 && (
+              <div>
+                <h2>Tidigare namn:</h2>
+                <ul>
+                  {history.map((name, idx) => (
+                    <li key={idx}>{name}</li>
+                  ))}
+                </ul>
+                <button onClick={downloadHistory}>Spara namn till fil</button>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<NameGenerator />);
+    </script> 
+     </div>
+     
+
+   
+  <div id="footer">
+    © 2014 Radio Hôla | 68,7 Mhz
+  </div>
+    
+  <script src="../js/reklam.js"></script>
+  <script src="../js/login.js"></script>
+</body>
+</html>
