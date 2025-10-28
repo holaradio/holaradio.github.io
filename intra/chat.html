@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radio Hôla – Chat</title>
+  <link rel="stylesheet" href="../css/style2.css">
+  <script src="../js/radio-schema.js"></script>
+</head>
+<body>
+  <script>
+    (function(){
+      function getCookie(name){
+        const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+        return m ? decodeURIComponent(m[2]) : null;
+      }
+      // cookie name must match whatever you set on successful login (e.g. 'auth')
+      const auth = getCookie('auth');
+      if (!auth) {
+        // not logged in -> redirect to contact/login page
+        location.replace('../kontakt.html');
+      }
+      if (auth && auth.length < 8) location.replace('../kontakt.html');
+    })();
+  </script>
+
+   <div id="wrapper">
+    <div id="header">
+      <a href="/" class="logo-a"><img src="/images/radiohola2.png" alt="Radio Hôlas logotype" srcset="../images/radiohola_intra.svg" class="logo"/></a>
+      <h1>Medarbetarchatt</h1>
+    </div>
+
+    <div id="nav">
+      <script>
+        fetch('nav.html')
+          .then(response => response.text())
+          .then(html => document.getElementById('nav').innerHTML = html);
+      </script>
+    </div>
+     <div id="content-fp">
+        <h2>Medarbetarchatt</h2>
+        
+     </div>
+     
+
+   
+  <div id="footer">
+    © 2014 Radio Hôla | 68,7 Mhz
+  </div>
+    
+  <script src="../js/reklam.js"></script>
+  <script src="../js/login.js"></script>
+</body>
+</html>
