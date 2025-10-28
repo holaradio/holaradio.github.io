@@ -26,13 +26,13 @@
 
   <div id="wrapper">
     <div id="header">
-      <a href="/" class="logo-a"><img src="/images/radiohola.png" alt="Radio Hôlas logotype"  srcset="/images/radiohola.svg" class="logo"/></a>
-      <h1>Mer lokalt kan det inte bli!</h1>
+      <a href="/" class="logo-a"><img src="/images/radiohola2.png" alt="Radio Hôlas logotype" srcset="../images/radiohola_intra.svg" class="logo"/></a>
+      <h1>Intranätet</h1>
     </div>
 
     <div id="nav">
       <script>
-        fetch('/nav.html')
+        fetch('nav.html')
           .then(response => response.text())
           .then(html => document.getElementById('nav').innerHTML = html);
       </script>
