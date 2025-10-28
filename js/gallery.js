@@ -24,7 +24,7 @@
   // { "src":"file.jpg", "thumb":"file-thumb.jpg", "alt":"Beskrivning" }
   async function loadIndex() {
     try {
-      const res = await fetch('/images/gallery/index.json', {cache:'no-cache'});
+      const res = await fetch('/images/index.json', {cache:'no-cache'});
       if (!res.ok) throw new Error('no index');
       const data = await res.json();
       if (!Array.isArray(data)) throw new Error('bad index.json');
