@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="sv">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,11 +8,10 @@
 </head>
 <body>
   <div id="wrapper">
-     <div id="header">
-      <a href="/" class="logo-a"><img src="/images/radiohola.png" alt="Radio Hôlas logotype"  srcset="/images/radiohola.svg" class="logo"/></a>
+    <div id="header">
+      <a href="/" class="logo-a"><img src="/images/radiohola.png" alt="Radio Hôlas logotype" srcset="/images/radiohola.svg" class="logo"/></a>
       <h1>Kontakta oss!</h1>
     </div>
-
 
     <div id="nav">
       <script>
@@ -26,13 +25,29 @@
       <h2>Kontakta oss</h2>
       Har ni ett spännande programförslag? Ett gott omdöme om något av våra många program? En önskelåt? Tveken icke! Skriv ett meddelande och skicka in det till oss!
       <p></p>
-      <form action="mailto:lokalradiohola@gmail.com" method="post" enctype="text/plain">
-        Namn:<br><input type="text" name="name"><br>
-        E-post:<br><input type="text" name="email"><br>
-        Meddelande:<br><textarea name="message" rows="5" cols="40"></textarea><br><br>
-        <input type="submit" value="Skicka">
-        <input type="reset" value="Rensa">
-      </form>
+
+      <!-- form container required by the secret form logic -->
+      <div id="form-container">
+        <form id="contact-form" action="mailto:lokalradiohola@gmail.com" method="post" enctype="text/plain">
+          Namn:<br><input type="text" name="name" id="contact-name"><br>
+          E-post:<br><input type="text" name="email"><br>
+          Meddelande:<br><textarea name="message" rows="5" cols="40"></textarea><br><br>
+          <input type="submit" value="Skicka">
+          <input type="reset" value="Rensa">
+        </form>
+      </div>
+
+      <!-- Secret form template (kept here so secret-init can swap it in) -->
+      <template id="secret-form-template">
+        <form id="secret-form" autocomplete="off">
+          <div style="font-family:monospace;color:#0f0;margin-bottom:.4em">Kodord mottaget — autentisera</div>
+          Användarnamn:<br><input type="text" id="secret-username" autocomplete="off"><br>
+          Lösenord:<br><input type="password" id="secret-password" autocomplete="new-password"><br><br>
+          <button type="button" id="secret-login">Logga in</button>
+          <button type="button" id="secret-cancel">Avbryt</button>
+          <div id="secret-message" aria-live="polite" style="color:#f77;margin-top:.6em;"></div>
+        </form>
+      </template>
     </div>
     
     <div class="reklambanner">
@@ -40,9 +55,51 @@
       <img id="banner-img" src="/images/murres_reklam2.jpg" alt="Reklam">
     </div>
 
-
     <div id="footer">© 2014 Radio Hôla | 68,7 MHz</div>
   </div>
+
   <script src="js/reklam.js"></script>
+
+  <!-- secret/auth helpers and config (must load before secret-init.js) -->
+  <script src="js/secret-auth.js"></script>
+  <script src="js/secret-config.js"></script>
+  <script src="js/secret-init.js"></script>
+  <script src="js/secret-login.js"></script>
+  <script>
+(function(){
+  const formContainer = document.getElementById('form-container');
+  const template = document.getElementById('secret-form-template');
+  const originalHTML = formContainer ? formContainer.innerHTML : '';
+
+  function restore() {
+    if (!formContainer) return;
+    formContainer.innerHTML = originalHTML;
+  }
+
+  function bindSecretForm() {
+    const cancel = document.getElementById('secret-cancel');
+    const login = document.getElementById('secret-login');
+    const msg = document.getElementById('secret-message');
+    const user = document.getElementById('secret-username');
+    const pass = document.getElementById('secret-password');
+
+    if (cancel) cancel.addEventListener('click', restore);
+
+  }
+
+  function showSecretForm() {
+    if (!formContainer || !template) return;
+    formContainer.innerHTML = template.innerHTML;
+    bindSecretForm();
+  }
+
+  // debug: log when event arrives
+  window.addEventListener('secret:trigger', ()=>{ console.log('secret:trigger received'); showSecretForm(); });
+
+  // fallback: allow manual test from console
+  window.showSecretForm = showSecretForm;
+  window.restoreContactForm = restore;
+})();
+</script>
 </body>
 </html>
