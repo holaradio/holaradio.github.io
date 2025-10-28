@@ -39,7 +39,19 @@
     </div>
      <div id="content-fp">
         <h2>Medarbetarchatt</h2>
-        
+
+        <div id="chat" aria-live="polite">
+          <!-- status area (auth / hints) -->
+          <div id="chat-status" style="margin-bottom:.5em;color:#444;font-size:.95rem"></div>
+
+          <div id="chat-messages" style="max-height:60vh;overflow:auto;padding:0.5em;border:1px solid #666;background:#fff;color:#000;"></div>
+
+          <form id="chat-form" style="margin-top:.5em;display:flex;gap:.5em">
+            <input id="chat-name" type="text" placeholder="Ditt namn" style="flex:0 0 150px" required>
+            <input id="chat-text" type="text" placeholder="Skriv meddelande..." style="flex:1" autocomplete="off" required>
+            <button id="chat-send" type="submit">Skicka</button>
+          </form>
+        </div>
      </div>
      
 
@@ -50,5 +62,6 @@
     
   <script src="../js/reklam.js"></script>
   <script src="../js/login.js"></script>
+  <script src="../js/chat-firebase.js"></script>
 </body>
 </html>
