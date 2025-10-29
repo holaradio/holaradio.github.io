@@ -121,6 +121,86 @@ body {
   position: relative;
   padding: 0 1em 0 1em;
 }
+.kontaktlista-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+.kontaktlista-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2b2b2b;
+}
+
+.kontakt-sektion {
+  margin-bottom: 40px;
+}
+
+.kontakt-sektion h3 {
+  margin-bottom: 15px;
+  border-bottom: 2px solid #0b5394;
+  color: #0b5394;
+  padding-bottom: 5px;
+}
+
+.kontakt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 15px;
+}
+
+.kontaktkort {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kontaktkort:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.kontaktkort h4 {
+  margin: 0;
+  color: #222;
+  font-size: 1.1em;
+}
+
+.kontaktkort p {
+  margin: 5px 0;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.kontaktkort .roll {
+  font-style: italic;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.kontaktkort .email {
+  color: #0b5394;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.kontaktkort .email:hover {
+  text-decoration: underline;
+}
+
+
 
 /* #kommuninfo::before {
   content: "";
@@ -545,6 +625,12 @@ h3 {
     margin: 0.2em 0.1em;
     font-size: 0.95em;     
     padding: 0.3em 0.5em;
+  }
+  .kontaktlista-container {
+    padding: 15px;
+  }
+  .kontaktkort {
+    padding: 10px;
   }
   #content,
   #content-fp,

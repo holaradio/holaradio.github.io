@@ -1,101 +1,66 @@
-/* === STYLING FÖR ANSLAGSTAVLA === */
-  .anslagstavla-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #f7f2e8 url("https://i.imgur.com/ruTtz5B.png") repeat; /* ljus kork-textur */
-    border: 4px solid #b58b4b;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.4);
-    font-family: "Trebuchet MS", sans-serif;
-    color: #333;
-  }
+.anslagstavla-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #4a3c10;
+  border: 4px solid #b58b4b;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  font-family: "Trebuchet MS", sans-serif;
+  color: #333;
+}
 
-  .anslagstavla-container h2 {
-    text-align: center;
-    margin-bottom: 15px;
-  }
+.anslagstavla-container h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color:#f7f2e8;
+}
 
-  .anslagstavla {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
-  }
+.anslagstavla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
 
-  .meddelande {
-    background: #fff8d6;
-    border: 2px solid #e5cf80;
-    border-radius: 6px;
-    box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
-    padding: 10px;
-    transform: rotate(var(--rotation));
-    position: relative;
-    transition: transform 0.2s ease;
-  }
+.meddelande {
+  background: var(--lapcolor, #fff8d6);
+  border: 2px solid rgba(0,0,0,0.1);
+  border-radius: 6px;
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+  padding: 10px;
+  transform: rotate(var(--rotation));
+  position: relative;
+  transition: transform 0.2s ease;
+}
 
-  .meddelande::before {
-    content: "📌";
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%) rotate(-10deg);
-    font-size: 20px;
-  }
+.meddelande::before {
+  content: "📌";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-10deg);
+  font-size: 20px;
+}
 
-  .meddelande:hover {
-    transform: scale(1.05) rotate(0deg);
-    z-index: 5;
-  }
+.meddelande:hover {
+  transform: scale(1.05) rotate(0deg);
+  z-index: 5;
+}
 
-  .meddelande h4 {
-    margin: 0 0 5px;
-    color: #4a3c10;
-  }
+.meddelande h4 {
+  margin: 0 0 5px;
+  color: #4a3c10;
+}
 
-  .meddelande p {
-    font-size: 14px;
-    margin: 0 0 5px;
-  }
+.meddelande p {
+  font-size: 14px;
+  margin: 0 0 5px;
+}
 
-  .avsandare {
-    font-size: 12px;
-    text-align: right;
-    color: #555;
-    font-style: italic;
-  }
-
-  /* === FORMULÄR === */
-  .meddelande-form {
-    background: rgba(255,255,255,0.8);
-    border: 1px solid #ccc;
-    padding: 15px;
-    border-radius: 6px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  }
-
-  .meddelande-form h3 {
-    margin-top: 0;
-  }
-
-  .meddelande-form input, .meddelande-form textarea {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 8px;
-    font-family: inherit;
-    border: 1px solid #bbb;
-    border-radius: 4px;
-  }
-
-  .meddelande-form button {
-    background: #b58b4b;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  .meddelande-form button:hover {
-    background: #d4aa70;
-  }
+.avsandare {
+  font-size: 12px;
+  text-align: right;
+  color: #555;
+  font-style: italic;
+}

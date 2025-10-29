@@ -1,6 +1,3 @@
-// Binds to the secret form's login button (id="secret-login") and validates using hashed+obfuscated values.
-// Requires: window.sha256Hex and window.xorDecodeFromBase64 available (from secret-auth.js)
-// Must be loaded after secret-auth.js and secret-config.js
 
 (function () {
   'use strict';

@@ -44,9 +44,9 @@
 
   // normalize item -> { src, thumb, alt }
   const items = list.map(it => {
-    if (typeof it === 'string') return { src: `/images/gallery/${it}`, thumb: `/images/gallery/${it}`, alt: it };
+    if (typeof it === 'string') return { src: `/images/${it}`, thumb: `/images/${it}`, alt: it };
     if (it && it.src) {
-      return { src: `/images/gallery/${it.src}`, thumb: it.thumb ? `/images/gallery/${it.thumb}` : `/images/gallery/${it.src}`, alt: it.alt || it.src };
+      return { src: `/images/${it.src}`, thumb: it.thumb ? `/images/${it.thumb}` : `/images/${it.src}`, alt: it.alt || it.src };
     }
     return null;
   }).filter(Boolean);
