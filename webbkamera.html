@@ -54,11 +54,18 @@
         drawScanlines();
 
         const now = new Date();
+        const hour = now.getHours();
         const timestamp = now.toLocaleTimeString("sv-SE");
         const viewers = 10 + Math.floor(Math.random() * 50);
-
-        statusDiv.textContent =
+        if (hour >= 22 || hour < 6) {
+          statusDiv.textContent =
+          `OBS! Nightvision ur funktion! Senast uppdaterad: ${timestamp} | Tittare: ${viewers}`;
+          statusDiv.style.color = "#f00";
+        } else{
+          statusDiv.textContent =
           `Senast uppdaterad: ${timestamp} | Uppdateringsintervall: ${updateInterval/1000}s | FPS: ${fps} | Tittare: ${viewers}`;
+        }
+        
       }
 
       function applyDaylight() {
@@ -72,8 +79,7 @@
         let nightvision = false;
 
         if (hour >= 22 || hour < 6) {
-          brightness = 0.5;
-          nightvision = true;
+          brightness = 0.03;
         } else if (hour >= 6 && hour < 9) {
           brightness = 0.8;
           tint = [80, 70, 40];
