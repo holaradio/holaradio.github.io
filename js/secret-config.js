@@ -6,7 +6,7 @@ window.SECRET_CONFIG = {
 
   users: [
     {
-      usernameHashObf: "dXV+ey99KCgoeSl+fCh6eX0rdHssLH8ofSt4fXl8ensvLC56eHR+LHx6Lnt9fS58KHl/L3R/Lnh9eCsoKX98eA==",
+      usernameHashObf: "fygudSkudXp8KHwrdS8uKHQuK357f3h8eyt6eHp/LysodHR+Lnx5eHV1dH97KXorKXR/en51eXUvKCwsf3x8Lw==",
       passwordHashObf: "KHwseHR5LCt5Lnt4KXgvK34oe391eCl1f3h8eX4vLCkufXUvfS91Li9+fCt5Ky54fnopeXl4dHsudC54L396KA==",
       redirect: "intra/"
     }
