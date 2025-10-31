@@ -1,0 +1,119 @@
+/* === Gästbokens helhet === */
+#gastbok {
+  max-width: 800px;
+  margin: 2em auto;
+  color: #000;
+  background: transparent; /* smälter in mot sidans bakgrund */
+  border: none;
+  text-align: left;
+  padding: 1em 1.5em; /* luft inuti gästboken */
+  box-sizing: border-box;
+}
+
+/* === Rubriken === */
+#gastbok h2 {
+  font-size: 1.8em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+  display: inline-block;
+  padding-bottom: 0.3em;
+}
+
+/* === Formulär === */
+.guestbook-form {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 2em;
+}
+
+.guestbook-form label {
+  display: block;
+  margin-top: 1em;
+  font-weight: bold;
+  color: #000;
+}
+
+.guestbook-form input,
+.guestbook-form textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(16, 13, 13, 0.3);
+  color: #000;
+  padding: 0.6em 0.8em;
+  border-radius: 6px;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+.guestbook-form input:focus,
+.guestbook-form textarea:focus {
+  outline: none;
+  border-color: #000;
+  background: rgba(235, 84, 36, 0.824);
+  
+}
+
+.guestbook-form button {
+  margin-top: 1em;
+  padding: 0.6em 1.2em;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.guestbook-form button:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.guestbook-status {
+  font-size: 0.85em;
+  color: rgba(22, 21, 21, 0.7);
+  margin-top: 0.5em;
+}
+
+/* === Gästboksinlägg === */
+.guestbook-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.entry {
+  background: rgba(0, 0, 0, 0.765);
+  border-left: 3px solid rgba(255, 255, 255, 0.4);
+  padding: 1em 1.2em;
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+.entry-header {
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.4em;
+}
+
+.entry-name {
+  font-weight: bold;
+  color: #fff;
+}
+
+.entry-date {
+  margin-left: 1em;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.entry-text {
+  color: #fdfdfd;
+  margin: 0.2em 0 0 0;
+}
+
+/* === Felmeddelande === */
+.error {
+  color: #ffb3b3;
+  font-weight: bold;
+}

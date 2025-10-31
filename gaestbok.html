@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PP7L8DKVBK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-PP7L8DKVBK');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radio Hôla – Gästbok</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/gaestbok.css">
+  <script src="js/radio-schema.js"></script>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="header">
+      <a href="/" class="logo-a"><img src="/images/radiohola.png" alt="Radio Hôlas logotype"  srcset="/images/radiohola.svg" class="logo"/></a>
+      <h1>Gästbok</h1>
+    </div>
+
+    <div id="nav">
+      <script>
+        fetch('nav.html')
+          .then(response => response.text())
+          .then(html => document.getElementById('nav').innerHTML = html);
+      </script>
+    </div>
+
+     <div id="content-fp">
+        <h2>Gästboken</h2>
+        <p>Du har hittat till Radio Hôlas gästbok – nätets mest digitala mötesplats!
+        Skriv några rader, berätta var du sitter och lyssnar eller hälsa till din favoritprogramledare.
+        Vi kanske läser upp ditt inlägg i etern!</p>
+        <section id="gastbok">
+        
+  <div class="guestbook-form">
+        <label for="namn">Namn:</label>
+        <input type="text" id="namn" placeholder="Ange ditt namn">
+
+        <label for="meddelande">Meddelande:</label>
+        <textarea id="meddelande" rows="4" placeholder="Skriv ett meddelande..."></textarea>
+
+        <button id="skicka">Skicka</button>
+        <p class="guestbook-status">Ditt inlägg granskas innan publicering.</p>
+    </div>
+
+    <div class="guestbook-entries" id="entries"></div>
+    </section>
+
+    <script src="js/gaestbok.js"></script>
+
+     </div>
+     
+      
+  <div class="reklambanner">
+    <div class="banner-label">Annons</div>
+    <img id="banner-img" src="/images/murres_reklam2.jpg" alt="Reklam">
+  </div>
+
+   
+  <div id="footer">
+    © 2014 Radio Hôla | 68,7 Mhz
+  </div>
+    
+  <script src="js/reklam.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

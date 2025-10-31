@@ -73,7 +73,7 @@ body {
   font-family: Georgia, serif;
   display: flex;
   flex-wrap: nowrap; 
-  gap: 0.5em;
+  gap: 0.4em;
   align-items: center;
   justify-content: center;;
 }
