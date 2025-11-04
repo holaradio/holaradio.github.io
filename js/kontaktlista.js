@@ -3,13 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       namn: "Bengt Yrvelström",
       roll: "Ordförande",
-      telefon: "078-111 22 33, +976-11 22 33 590 (hem)",
+      telefon: "078-111 22 33",
       email: ""
     },
     {
       namn: "Eva Bálánbéna",
       roll: "Vice ordförande",
-      telefon: "078-222 33 44",
+      telefon: "078-222 33 44, +976-11 22 33 590 (hem)",
       email: ""
     },
     {
