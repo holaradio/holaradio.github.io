@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const styrelse = [
     {
-      namn: "Pejr Yrvelström",
+      namn: "Bengt Yrvelström",
       roll: "Ordförande",
       telefon: "078-111 22 33, +976-11 22 33 590 (hem)",
       email: ""
