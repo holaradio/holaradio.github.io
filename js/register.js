@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   usernameInput.addEventListener("input", () => {
     if (usernameInput.value.trim() !== "") {
-      // slumpa ett meddelande från listan
       const randomMsg = felmeddelanden[Math.floor(Math.random() * felmeddelanden.length)];
       feedback.textContent = randomMsg;
     } else {

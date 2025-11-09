@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const username = document.getElementById("username");
   const password = document.getElementById("password");
 
-  // Anpassade felmeddelanden istället för "Please fill out this field"
   username.addEventListener("invalid", function () {
     this.setCustomValidity("Du måste skriva in ett användarnamn!");
   });
@@ -20,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
     this.setCustomValidity("");
   });
 
-  // När formuläret skickas in
   loginForm.addEventListener("submit", function (e) {
     e.preventDefault(); 
 
