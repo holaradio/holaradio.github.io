@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const entriesContainer = document.getElementById("entries");
   const dataUrl = "/data/gaestbok.json"; 
 
-  // === Hämta inlägg från JSON ===
   fetch(dataUrl)
     .then(response => {
       if (!response.ok) throw new Error("Kunde inte läsa gästboken.");
@@ -15,9 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
       entriesContainer.innerHTML = `<p class="error">Fel vid hämtning av inlägg: ${error.message}</p>`;
     });
 
-  // === Funktion för att rendera inlägg ===
   function renderEntries(entries) {
-    entriesContainer.innerHTML = ""; // töm gammalt innehåll
+    entriesContainer.innerHTML = ""; 
 
     entries.forEach(entry => {
       const div = document.createElement("div");
@@ -33,9 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // === Fejkad "Skicka"-funktion ===
   const knapp = document.getElementById("skicka");
   knapp.addEventListener("click", () => {
-    alert("Tack! Ditt inlägg har skickats för granskning av moderator Röjgen.");
+    alert("Tack! Ditt inlägg har skickats för granskning av moderator.");
   });
 });
