@@ -1,16 +1,14 @@
-/* === Gästbokens helhet === */
 #gastbok {
   max-width: 800px;
   margin: 2em auto;
   color: #000;
-  background: transparent; /* smälter in mot sidans bakgrund */
+  background: transparent; 
   border: none;
   text-align: left;
-  padding: 1em 1.5em; /* luft inuti gästboken */
+  padding: 1em 1.5em; 
   box-sizing: border-box;
 }
 
-/* === Rubriken === */
 #gastbok h2 {
   font-size: 1.8em;
   margin-bottom: 1em;
@@ -19,7 +17,6 @@
   padding-bottom: 0.3em;
 }
 
-/* === Formulär === */
 .guestbook-form {
   background: none;
   border: none;
@@ -49,6 +46,7 @@
 .guestbook-form input:focus,
 .guestbook-form textarea:focus {
   outline: none;
+  color: #d5ffff;
   border-color: #000;
   background: rgba(235, 84, 36, 0.824);
   
@@ -75,7 +73,6 @@
   margin-top: 0.5em;
 }
 
-/* === Gästboksinlägg === */
 .guestbook-entries {
   display: flex;
   flex-direction: column;
