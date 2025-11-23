@@ -38,7 +38,18 @@
     </div>
      <div id="content-fp">
         <h2>Medarbetarchatt</h2>
-        <i>Uppdatering 23/11: På grund av att företaget som utvecklar chattapplikationen är baserad i Gruvvik rekommenderas ni att använda ett lösenord som ni inte använder någon annanstans. Hör av dig till mig om du vill bli administratör. Det gäller dock inte dig, Röjgen.<br/></br>Till dig som är administratör: om du inte ser admin-gränssnittet, uppdatera sidan.</br></br> /Rootmar</i></br></br>----------
+        <div class="update-box" aria-hidden="false">
+          <button type="button" class="update-toggle" aria-expanded="false" aria-controls="update-content">
+            Uppdatering 23/11
+            <span class="chev" aria-hidden="true">▸</span>
+          </button>
+          <div id="update-content" class="update-content" hidden>
+            <p>På grund av att företaget som utvecklar chattapplikationen är baserad i Gruvvik rekommenderas ni att använda ett lösenord som ni inte använder någon annanstans. Hör av dig till mig om du vill bli administratör. Det gäller dock inte dig, Röjgen.</p>
+            <p>Till dig som är administratör: om du inte ser admin-gränssnittet, uppdatera sidan.</p>
+            <p>/Rootmar</p>
+          </div>
+        </div>
+        <hr class="update-sep">
         <div id="chat" aria-live="polite">
           <!-- status area (auth / hints) -->
           <div id="chat-status" style="margin-bottom:.5em;color:#444;font-size:.95rem"></div>
@@ -58,7 +69,18 @@
   <div id="footer">
     © 2014 Radio Hôla | 68,7 Mhz
   </div>
-    
+  <script>
+    // Toggle the update box (delegated click)
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest && e.target.closest('.update-toggle');
+      if (!btn) return;
+      const id = btn.getAttribute('aria-controls');
+      const content = id ? document.getElementById(id) : null;
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      if (content) content.hidden = expanded;
+    });
+  </script>
   <script src="../js/login.js"></script>
   <script src="../js/chat-firebase.js"></script>
 </body>

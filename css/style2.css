@@ -200,6 +200,46 @@ body {
   text-decoration: underline;
 }
 
+.update-box { 
+  border:1px solid #ccc; 
+  padding:.45rem; 
+  border-radius:.35rem; 
+  background:#fbfbfb; 
+  margin:.6rem 0; 
+}
+
+.update-toggle { 
+  background:none; 
+  border:none; 
+  width:100%; 
+  text-align:left; 
+  font-weight:700; 
+  cursor:pointer; 
+  display:flex; 
+  align-items:center; 
+  gap:.5rem; 
+  padding:.2rem; 
+  font-size:1rem; 
+  color:#111; 
+}
+.update-toggle .chev { 
+  transition: transform .18s ease; 
+  font-size:.9rem; 
+  color:#666; 
+}
+.update-toggle[aria-expanded="true"] .chev { 
+  transform: rotate(90deg); 
+}
+.update-content { 
+  margin-top:.4rem; 
+  color:#222; 
+  line-height:1.4; 
+}
+.update-sep { 
+  margin:.6rem 0; 
+  border:0; 
+  border-top:1px solid #e6e6e6; 
+}
 
 
 /* #kommuninfo::before {
