@@ -754,7 +754,7 @@
     } catch (err) {
       console.error('Failed to post message', err);
       if (err && err.code === 'permission-denied') {
-        showTemp('Server nekar posten. Aktivera korrekt autentisering i Firebase och uppdatera regler.');
+        showTemp('Server nekar posten. Aktivera korrekt autentisering i och uppdatera regler.');
         statusEl.textContent = 'Server nekar skrivning (permission-denied).';
       } else {
         showTemp('Meddelandet kunde inte postas. Försök igen.');
