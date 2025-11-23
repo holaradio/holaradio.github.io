@@ -157,6 +157,7 @@
   // Admin caches
   const adminEmails = new Set();
   const adminUids = new Set();
+  let adminReady = false; // becomes true after first admins snapshot
 
   function isUidAdmin(uid, email) {
     if (!uid && !email) return false;
@@ -165,6 +166,18 @@
     return false;
   }
 
+  // Debug helper: inspect current auth/admin/users state from console
+  try {
+    window.chatDebug = {
+      logState() {
+        const u = auth.currentUser || currentUser;
+        console.debug('chatDebug: user=', u && { uid: u.uid, email: (u.email||'').toLowerCase(), isAnonymous: !!u.isAnonymous });
+        console.debug('chatDebug: adminEmails=', Array.from(adminEmails), 'adminUids=', Array.from(adminUids));
+        try { console.debug('chatDebug: registeredUsers=', registeredUsers ? registeredUsers.slice(0,50) : []); } catch(e){}
+      }
+    };
+  } catch (e) { /* noop if window not writable */ }
+  
   function refreshAdminPanelVisibility() {
     const user = auth.currentUser || currentUser;
     const userEmail = user && user.email ? String(user.email).toLowerCase() : null;
@@ -226,10 +239,16 @@
       if (data.uid) adminUids.add(String(data.uid).trim());
       if (data.email) adminEmails.add(String(data.email).toLowerCase().trim());
     });
+    adminReady = true;
     console.debug('chat: adminEmails=', Array.from(adminEmails), 'adminUids=', Array.from(adminUids));
     renderAdminUsersList(); // will re-render users list visibility if needed
     updateAdminStyles();
     refreshAdminPanelVisibility();
+    // if current user is admin, attach users listener now
+    try {
+      const u = auth.currentUser || currentUser;
+      if (u && isUidAdmin(u.uid, u.email)) attachUsersListener();
+    } catch (e) {}
   }, err => {
     console.warn('Failed to listen to admins collection', err);
   });
@@ -272,27 +291,60 @@
     });
   }
 
-  // listen registered users collection (if present)
+  // listen registered users collection (attach only when admins known and current user is admin)
   let usersUnsub = null;
-  try {
-    usersUnsub = db.collection('users').onSnapshot(snapshot => {
-      registeredUsers.length = 0;
-      snapshot.forEach(doc => {
-        const d = doc.data() || {};
-        registeredUsers.push({ uid: d.uid || doc.id, email: d.email || (d.uid && `${d.uid}@`), name: d.displayName || d.name || d.email || d.uid });
+  function attachUsersListener() {
+    if (usersUnsub) return;
+    // wait until admin snapshot has arrived
+    if (!adminReady) {
+      console.debug('attachUsersListener: waiting for admins snapshot...');
+      setTimeout(attachUsersListener, 200);
+      return;
+    }
+    const u = auth.currentUser || currentUser;
+    if (!u) {
+      console.debug('attachUsersListener: no signed-in user yet');
+      return;
+    }
+    if (!isUidAdmin(u.uid, u.email)) {
+      console.debug('attachUsersListener: current user is not admin; skipping users listener');
+      return;
+    }
+    try {
+      usersUnsub = db.collection('users').onSnapshot(snapshot => {
+        registeredUsers.length = 0;
+        snapshot.forEach(doc => {
+          const d = doc.data() || {};
+          registeredUsers.push({ uid: d.uid || doc.id, email: d.email || (d.uid && `${d.uid}@`), name: d.displayName || d.name || d.email || d.uid });
+        });
+        // sort by name/email
+        registeredUsers.sort((a,b) => (a.name||'').localeCompare(b.name||'') || (a.email||'').localeCompare(b.email||''));
+        renderAdminUsersList();
+      }, err => {
+        console.warn('Could not listen to users collection (maybe missing or rules block):', err);
+        registeredUsers.length = 0;
+        renderAdminUsersList();
       });
-      // sort by name/email
-      registeredUsers.sort((a,b) => (a.name||'').localeCompare(b.name||'') || (a.email||'').localeCompare(b.email||''));
-      renderAdminUsersList();
-    }, err => {
-      console.warn('Could not listen to users collection (maybe missing):', err);
-      // show placeholder
-      registeredUsers.length = 0;
-      renderAdminUsersList();
-    });
-  } catch (e) {
-    console.warn('Users listener setup failed', e);
+    } catch (e) {
+      console.warn('Users listener setup failed', e);
+    }
   }
+
+  // try to attach initially if already signed in
+  if (auth.currentUser) attachUsersListener();
+
+  // ensure we try again after auth state changes (login)
+  const origAuthHandler = auth.onAuthStateChanged;
+  auth.onAuthStateChanged = function(fn) {
+    const wrapped = (...args) => {
+      fn(...args);
+      // after auth state change, try to attach users listener (if not already attached)
+      if (args[0] && !usersUnsub) {
+        attachUsersListener();
+      }
+    };
+    return origAuthHandler.call(this, wrapped);
+  };
 
   function showAdminMsg(msg, timeout = 3000) {
     if (!adminMsgEl) return;
@@ -386,6 +438,8 @@
   let currentUser = null;
   auth.onAuthStateChanged(user => {
     currentUser = user;
+    // attach users listener once we have a signed-in user (so rules allow listing)
+    if (currentUser) attachUsersListener();
     const userEmail = user && user.email ? user.email.toLowerCase() : null;
     if (user) {
       statusEl.textContent = user.isAnonymous ? 'Inloggad anonymt' : `Inloggad: ${user.email || user.displayName || user.uid}`;
@@ -518,6 +572,17 @@
     textDiv.innerHTML = escapeHtml(data.text || '') + (data.dm ? '<em style="color:#666;font-size:.85rem;margin-left:.6rem"> (DM)</em>' : '');
     left.appendChild(textDiv);
 
+    // show edited label if present
+    if (data.edited) {
+      const editedAt = (data.editedAt && data.editedAt.toDate) ? data.editedAt.toDate() : null;
+      const edLabel = document.createElement('div');
+      edLabel.style.color = '#888';
+      edLabel.style.fontSize = '.8rem';
+      edLabel.style.marginTop = '.2rem';
+      edLabel.textContent = 'redigerad' + (editedAt ? ` ${editedAt.toLocaleDateString()} ${editedAt.toLocaleTimeString()}` : '');
+      left.appendChild(edLabel);
+    }
+
     el.appendChild(left);
 
     const controls = document.createElement('div');
@@ -547,6 +612,25 @@
     });
     controls.appendChild(del);
 
+    // Edit button (admins or owner)
+    const canEdit = currentUid && (currentUid === uid || isUidAdmin(currentUid, currentEmail));
+    const editBtn = document.createElement('button');
+    editBtn.className = 'msg-edit';
+    editBtn.textContent = 'Redigera';
+    editBtn.title = 'Redigera meddelande';
+    editBtn.style.background = 'transparent';
+    editBtn.style.border = '1px solid #2a7ae2';
+    editBtn.style.color = '#2a7ae2';
+    editBtn.style.padding = '.2rem .4rem';
+    editBtn.style.borderRadius = '4px';
+    editBtn.style.cursor = 'pointer';
+    editBtn.style.display = canEdit ? '' : 'none';
+    editBtn.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      openEditInline(id, el, data);
+    });
+    controls.appendChild(editBtn);
+
     el.appendChild(controls);
 
     return el;
@@ -564,6 +648,83 @@
       else showTemp('Kunde inte ta bort meddelandet.');
     }
   }
+
+  // Inline edit: replace message text with an input + Save/Cancel
+  function openEditInline(docId, domEl, data) {
+    const textDiv = domEl.querySelector('div'); // first div after name/when
+    if (!textDiv) return;
+    const oldText = data.text || '';
+    // hide existing text
+    textDiv.style.display = 'none';
+
+    const editWrap = document.createElement('div');
+    editWrap.style.display = 'flex';
+    editWrap.style.gap = '.4rem';
+    editWrap.style.marginTop = '.3rem';
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = oldText;
+    input.style.flex = '1';
+    input.maxLength = MAX_MESSAGE_LENGTH;
+    editWrap.appendChild(input);
+
+    const saveBtn = document.createElement('button');
+    saveBtn.textContent = 'Spara';
+    saveBtn.style.background = '#2a7ae2';
+    saveBtn.style.color = '#fff';
+    saveBtn.style.border = 'none';
+    saveBtn.style.padding = '.25rem .5rem';
+    saveBtn.style.borderRadius = '4px';
+    saveBtn.style.cursor = 'pointer';
+    editWrap.appendChild(saveBtn);
+
+    const cancelBtn = document.createElement('button');
+    cancelBtn.textContent = 'Avbryt';
+    cancelBtn.style.padding = '.25rem .5rem';
+    cancelBtn.style.borderRadius = '4px';
+    cancelBtn.style.cursor = 'pointer';
+    editWrap.appendChild(cancelBtn);
+
+    textDiv.parentNode.insertBefore(editWrap, textDiv.nextSibling);
+
+    cancelBtn.addEventListener('click', () => {
+      editWrap.remove();
+      textDiv.style.display = '';
+    });
+
+    saveBtn.addEventListener('click', async () => {
+      const newText = (input.value || '').trim();
+      if (!newText) { showTemp('Meddelandet får inte vara tomt.'); return; }
+      if (newText.length > MAX_MESSAGE_LENGTH) { showTemp(`Meddelande för långt (max ${MAX_MESSAGE_LENGTH} tecken).`); return; }
+      try {
+        // debug: log who is attempting the edit and current admin sets
+        console.debug('chatDebug: edit attempt', {
+          docId,
+          currentUser: auth.currentUser && { uid: auth.currentUser.uid, email: (auth.currentUser.email||'').toLowerCase() },
+          adminEmails: Array.from(adminEmails),
+          adminUids: Array.from(adminUids),
+          ownerUid: data.uid,
+          newTextPreview: newText.slice(0,120)
+        });
+         await db.collection('chats').doc(docId).update({
+           text: replaceProfanity(newText),
+           edited: true,
+           editedAt: firebase.firestore.FieldValue.serverTimestamp()
+         });
+         editWrap.remove();
+         // optimistic UI: update shown text and reveal
+         textDiv.innerHTML = escapeHtml(newText) + (data.dm ? '<em style="color:#666;font-size:.85rem;margin-left:.6rem"> (DM)</em>' : '');
+         textDiv.style.display = '';
+         showTemp('Meddelandet uppdaterat.');
+       } catch (err) {
+         console.debug('chatDebug: edit failed', err);
+         console.error('edit failed', err);
+         if (err && err.code === 'permission-denied') showTemp('Du har inte behörighet att redigera detta meddelande.');
+         else showTemp('Kunde inte uppdatera meddelandet.');
+       }
+     });
+   }
 
   form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
