@@ -14,4 +14,5 @@ document.addEventListener("DOMContentLoaded", () => {
     index = (index + 1) % banners.length; // loopa runt
     bannerImg.src = banners[index];
   }, 10000); // 30 sekunder
+
 });

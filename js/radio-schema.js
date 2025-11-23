@@ -212,6 +212,7 @@ function visaNuSpelas() {
   element.textContent = `🎵 Nu spelas: ${nyLåt.titel} (${nyLåt.duration} kvar)`;
 }
 
+
 // Uppdatera var 10000 ms
 setInterval(visaNuSpelas, 10000);
 window.onload = visaNuSpelas;
