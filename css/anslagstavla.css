@@ -1,66 +1,123 @@
+:root{
+  --board-bg-1: #0f1724;
+  --board-bg-2: #081226;
+  --note-shadow: 0 18px 30px rgba(2,6,23,0.45);
+  --note-elev: 0 8px 18px rgba(2,6,23,0.25);
+  --pin-color: #ffde59;
+  --accent: #0b66ff;
+  --note-radius: 14px;
+  --gap: 18px;
+  --max-width: 1100px;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Container (board) */
 .anslagstavla-container {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #4a3c10;
-  border: 4px solid #b58b4b;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
-  font-family: "Trebuchet MS", sans-serif;
-  color: #333;
+  max-width: var(--max-width);
+  margin: 36px auto;
+  padding: 28px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--board-bg-1) 0%, var(--board-bg-2) 100%);
+  box-shadow: 0 20px 50px rgba(3,10,25,0.6);
+  border: 1px solid rgba(255,255,255,0.03);
+  color: #e6eef9;
+  font-family: var(--font-sans);
 }
 
+/* Heading */
 .anslagstavla-container h2 {
-  text-align: center;
-  margin-bottom: 15px;
-  color:#f7f2e8;
+  margin: 0 0 18px;
+  font-size: 1.4rem;
+  color: #f3f8ff;
+  letter-spacing: 0.2px;
 }
 
+/* Board layout: responsive grid with auto-fill and tidy gaps */
 .anslagstavla {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: var(--gap);
+  align-items: start;
+  padding: 6px;
 }
 
+/* Note (post-it) */
 .meddelande {
   background: var(--lapcolor, #fff8d6);
-  border: 2px solid rgba(0,0,0,0.1);
-  border-radius: 6px;
-  box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
-  padding: 10px;
-  transform: rotate(var(--rotation));
+  border-radius: var(--note-radius);
+  padding: 14px;
   position: relative;
-  transition: transform 0.2s ease;
+  box-shadow: var(--note-elev), var(--note-shadow);
+  transform: rotate(var(--rotation, 0deg));
+  transition: transform .22s ease, box-shadow .18s ease, transform .18s ease;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
+  will-change: transform;
+  border: 1px solid rgba(0,0,0,0.06);
 }
 
+/* remove pin/tack */
 .meddelande::before {
-  content: "📌";
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%) rotate(-10deg);
-  font-size: 20px;
+  display: none;
 }
 
+/* disable hover lift and extra shadow — keep the base look */
 .meddelande:hover {
-  transform: scale(1.05) rotate(0deg);
-  z-index: 5;
+  transform: none;
+  box-shadow: var(--note-elev); /* keep the base elevation only */
+  cursor: default;
+  z-index: auto;
 }
 
+/* Title and content styling */
 .meddelande h4 {
-  margin: 0 0 5px;
-  color: #4a3c10;
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  color: rgba(12,18,28,0.92);
+  font-weight: 700;
+  line-height: 1.08;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.35);
 }
 
 .meddelande p {
-  font-size: 14px;
-  margin: 0 0 5px;
+  margin: 0 0 10px;
+  color: rgba(12,18,28,0.86);
+  font-size: .95rem;
+  line-height: 1.35;
 }
 
+/* sender line */
 .avsandare {
-  font-size: 12px;
+  margin-top: auto;
+  font-size: .82rem;
+  color: rgba(12,18,28,0.7);
   text-align: right;
-  color: #555;
   font-style: italic;
 }
+
+/* nice subtle entrance animation */
+@keyframes note-in {
+  from { opacity: 0; transform: translateY(10px) scale(.98) rotate(0deg); }
+  to   { opacity: 1; transform: translateY(0) scale(1) rotate(var(--rotation,0deg)); }
+}
+.meddelande { animation: note-in .38s ease both; }
+
+/* color variants (keeps your random lapColors working) */
+.meddelande[data-color="warm"] { --lapcolor: #fff8d6; }
+.meddelande[data-color="rose"] { --lapcolor: #ffe4e6; }
+.meddelande[data-color="mint"] { --lapcolor: #e6fff2; }
+.meddelande[data-color="sky"] { --lapcolor: #e6f2ff; }
+.meddelande[data-color="lemon"] { --lapcolor: #fffbe6; }
+
+/* responsive adjustments */
+@media (max-width: 720px) {
+  .anslagstavla-container { padding: 16px; margin: 18px auto; border-radius: 12px; }
+  .meddelande { min-height: 100px; padding: 12px; }
+  .meddelande::before { width: 14px; height: 14px; top: -8px; }
+}
+
+/* small decorative separator if needed */
+.anslagstavla + hr { border: none; border-top: 1px solid rgba(255,255,255,0.04); margin: 20px 0; }
