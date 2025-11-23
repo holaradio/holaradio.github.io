@@ -200,45 +200,61 @@ body {
   text-decoration: underline;
 }
 
-.update-box { 
-  border:1px solid #ccc; 
-  padding:.45rem; 
-  border-radius:.35rem; 
-  background:#fbfbfb; 
-  margin:.6rem 0; 
+.update-box {
+  border: none;
+  padding: .6rem;
+  border-radius: .6rem;
+  background: linear-gradient(135deg,#0b66ff 0%, #18c2ff 100%);
+  color: #fff;
+  margin: .6rem 0;
+  box-shadow: 0 10px 30px rgba(11,102,255,0.14), inset 0 1px 0 rgba(255,255,255,0.06);
+  overflow: hidden;
 }
 
-.update-toggle { 
-  background:none; 
-  border:none; 
-  width:100%; 
-  text-align:left; 
-  font-weight:700; 
-  cursor:pointer; 
-  display:flex; 
-  align-items:center; 
-  gap:.5rem; 
-  padding:.2rem; 
-  font-size:1rem; 
-  color:#111; 
+/* Headline button */
+.update-toggle {
+  background: transparent;
+  border: 0;
+  width: 100%;
+  text-align: left;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .25rem .1rem;
+  font-size: 1.02rem;
+  color: #fff;
+  line-height: 1.2;
 }
-.update-toggle .chev { 
-  transition: transform .18s ease; 
-  font-size:.9rem; 
-  color:#666; 
+.update-toggle:hover { opacity: .95; transform: translateY(-1px); transition: transform .12s ease, opacity .12s ease; }
+
+.update-toggle .chev {
+  transition: transform .18s ease, color .18s ease;
+  font-size: .95rem;
+  color: rgba(255,255,255,0.95);
 }
-.update-toggle[aria-expanded="true"] .chev { 
-  transform: rotate(90deg); 
+.update-toggle[aria-expanded="true"] .chev { transform: rotate(90deg); }
+
+.update-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .28s ease, padding .22s ease;
+  padding: 0 0 0 0;
+  color: rgba(255,255,255,0.96);
+  font-size: .95rem;
 }
-.update-content { 
-  margin-top:.4rem; 
-  color:#222; 
-  line-height:1.4; 
+
+.update-toggle[aria-expanded="true"] + .update-content {
+  max-height: 520px; /* large enough to show content */
+  padding-top: .6rem;
 }
-.update-sep { 
-  margin:.6rem 0; 
-  border:0; 
-  border-top:1px solid #e6e6e6; 
+
+/* subtle separator */
+.update-sep {
+  margin: .6rem 0;
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,0.12);
 }
 
 
