@@ -671,16 +671,15 @@ h3 {
   color: #666;
 }
 
-/* Message text:
-   - clamp to a couple of lines so it does not push controls / name off-screen
-   - use ellipsis for overflow; this makes the message "squeezed" instead of forcing scrolling */
+/* Message text — show full message vertically, prevent horizontal overflow */
 .msg-text {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* adjustable: number of visible lines */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal;
+  /* no clamping — allow full vertical length */
+  display: block;
+  white-space: normal;           /* allow wrapping */
+  word-break: break-word;        /* break long words to avoid horizontal scroll */
+  overflow-wrap: anywhere;       /* aggressive wrap for long strings/URLs */
+  overflow-x: hidden;            /* never allow horizontal scroll */
+  overflow-y: visible;
   flex: 1 1 auto;
   min-width: 0;
   margin-top: .25rem;
@@ -709,10 +708,8 @@ h3 {
 /* When very narrow, stack controls vertically to preserve username visibility */
 @media (max-width:640px) {
   .msg-name { max-width: 68%; } /* give name more room on small screens */
-  .msg-text { -webkit-line-clamp: 2; } /* fewer lines on small screens */
 
-  /* If the available horizontal space is small, stack controls vertically to avoid overflow.
-     This helps when a long username would otherwise push controls off-screen. */
+
   .msg-controls-row {
     flex-direction: column;
     align-items: flex-end;
@@ -724,20 +721,30 @@ h3 {
     padding: .18rem .36rem;
     font-size: 0.95rem;
   }
+
+  /* ensure message text is not clamped on small screens */
+  .msg-text {
+    display: block;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    overflow-x: hidden;
+  }
 }
 
 /* Medium screens: allow more name width while ensuring controls remain visible */
 @media (min-width:641px) and (max-width:900px) {
   .msg-name { max-width: 55%; }
-  .msg-text { -webkit-line-clamp: 3; }
+
+  .msg-text {
+    display: block;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    overflow-x: hidden;
+  }
 }
 
-/* Optional: if a message needs full text, tapping it could expand (leave styles for JS to toggle) */
-.msg-text.expanded {
-  -webkit-line-clamp: unset;
-  display: block;
-  overflow: visible;
-}
 
 .modal-backdrop {
   position: fixed;
