@@ -860,7 +860,6 @@ h3 {
 
 /* Responsive: keep name input visible on smaller screens, stack form */
 @media (max-width:900px){
-  /* stack chat form vertically so name stays visible */
   #chat-form { 
     flex-direction: column; 
     align-items: stretch;
@@ -868,7 +867,6 @@ h3 {
   }
   #chat-name { 
     display: block !important; 
-    width: 100%; 
     flex: none;
     order: -1; /* place above the message input */
     margin-bottom: 0.2rem;
@@ -884,19 +882,11 @@ h3 {
     flex-wrap: wrap;
     justify-content: flex-end;
   }
-  .msg-controls-row button { flex: none; white-space: nowrap; }
-
-  /* when really narrow, stack vertically */
-  @media (max-width:520px) {
-    .msg-controls-row {
-      flex-direction: column;
-      align-items: flex-end;
-    }
+  .msg-controls-row button { 
+    flex: none; 
+    white-space: nowrap; 
   }
 }
-
-/* ensure very long usernames don't force horizontal scroll for controls */
-.msg-name { max-width: 56ch; display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
 
 @media (max-width:640px) { 
   body {
@@ -957,5 +947,19 @@ h3 {
     padding: 0.5em;
   }
   .msg-bubble { max-width: 74%; }
+  .msg-name { 
+    max-width: 56ch; 
+    display: inline-block; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+    vertical-align: middle; 
+  }
+}
 
+@media (max-width:520px) {
+  .msg-controls-row {
+    flex-direction: column;
+    align-items: flex-end;
+  }
 }
