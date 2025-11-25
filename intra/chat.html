@@ -23,23 +23,20 @@
     })();
   </script>  -->
 
-   <div id="wrapper">
-    <div id="header">
-      <a href="/intra" class="logo-a"><img src="/images/radiohola2.png" alt="Radio Hôlas logotype" srcset="../images/radiohola_intra.svg" class="logo"/></a>
-      <div style="display:flex;flex-direction:column;gap:.15rem">
+  <div id="wrapper">
+      <div id="header">
+        <a href="/intra" class="logo-a"><img src="/images/radiohola2.png" alt="Radio Hôlas logotype" srcset="../images/radiohola_intra.svg" class="logo"/></a>
         <h1 style="margin:0">Medarbetarchatt</h1>
-        <div style="font-size:.95rem;color:#fff;opacity:.9">En tjänst av <strong>Jönsmunds teknikbod, Gruvvik</strong></div>
       </div>
-    </div>
 
-    <div id="nav">
-      <script>
-        fetch('nav.html')
-          .then(response => response.text())
-          .then(html => document.getElementById('nav').innerHTML = html);
-      </script>
-    </div>
-     <div id="content-fp">
+      <div id="nav">
+        <script>
+          fetch('nav.html')
+            .then(response => response.text())
+            .then(html => document.getElementById('nav').innerHTML = html);
+        </script>
+      </div>
+      <div id="content-fp">
         <h2>Medarbetarchatt</h2>
         <div class="update-box" aria-hidden="false">
           <button type="button" class="update-toggle" aria-expanded="false" aria-controls="update-content">
@@ -65,7 +62,9 @@
             <button id="chat-send" type="submit">Skicka</button>
           </form>
         </div>
-     </div>
+        <div style="font-size:1em;color:#514f4f;opacity:.9">En tjänst från Jönsmunds teknikbod - Stoltgatan 3, Gruvvik</div>
+
+    </div>
      
 
    
