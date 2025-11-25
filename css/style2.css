@@ -856,24 +856,13 @@ h3 {
   }
   .msg-bubble { max-width: 84%; }
   #chat-name { display:none; }
-}
-
-@media (max-width:900px){
   #chat-form { 
     flex-direction: column; 
     align-items: stretch;
     gap: 0.5rem;
   }
-  #chat-name { 
-    display: block !important; 
-    flex: none;
-    order: -1; /* place above the message input */
-    margin-bottom: 0.2rem;
-  }
-  #chat-text { width: 100%; }
+  #chat-text { width: 40%; }
   #chat-send { align-self: flex-end; }
-
-  /* message controls: allow wrapping and stacking on narrow screens */
   .msg-controls-row {
     display: flex;
     gap: .35rem;
@@ -886,6 +875,7 @@ h3 {
     white-space: nowrap; 
   }
 }
+
 
 @media (max-width:640px) { 
   body {
