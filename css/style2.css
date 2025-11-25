@@ -622,109 +622,121 @@ h3 {
   max-height: 60vh;
   overflow:auto;
   box-shadow: 0 6px 18px rgba(14,30,45,0.06);
+  /* prevent accidental horizontal scroll — messages will wrap / clamp instead */
+  overflow-x: hidden;
+  /* allow flex/grid children to shrink properly */
+  min-width: 0;
 }
 
-.msg-row { 
-  display:flex; 
-  gap:.6rem; 
-  align-items:flex-start; 
-  padding:.45rem; 
-}
-.msg-avatar {
-  width:40px; height:40px; border-radius:50%;
-  background: linear-gradient(135deg,#e9eef6,#cfe8ff);
-  display:inline-flex; align-items:center; justify-content:center;
-  font-weight:700; color:#0b2b45; flex:0 0 40px;
-  box-shadow: 0 3px 8px rgba(12,20,30,0.06);
+/* ensure rows and their children can shrink (important for flexbox) */
+.msg-row, .msg-row > div, .msg-text, .msg-name {
+  min-width: 0;
 }
 
-.msg-bubble {
-  background:#fff; border-radius:12px; padding:.5rem .65rem; max-width:72%;
-  box-shadow: 0 6px 18px rgba(12,20,30,0.04); position:relative;
-  color:#0b2b45; line-height:1.35;
-}
-.msg-bubble.you { 
-  background: linear-gradient(180deg,#e8f6ff,#dff2ff); 
-  border:1px solid rgba(10,90,180,0.08); 
-}
-.msg-bubble.admin { 
-  background: linear-gradient(180deg,#e8fff0,#d9ffee);
-   border:1px solid rgba(30,180,90,0.08);
+/* Message header / body layout */
+.msg-row {
+  display: flex;
+  gap: .6rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  /* allow the row to break content rather than force whole-line scroll */
+  overflow: hidden;
 }
 
-.msg-meta { 
-  font-weight:700; 
-  font-size:.95rem; 
-  display:flex; 
-  gap:.5rem; 
-  align-items:center; 
-}
-.msg-meta .ts { 
-  font-weight:400; 
-  color:#667; 
-  font-size:.8rem; 
-  margin-left:.35rem; 
+/* Left column (name + time + text) keeps priority for the name */
+.msg-row > div:first-child {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
-.msg-controls { 
-  display:none; 
-  gap:.4rem; 
-  margin-left:.5rem; 
-}
-.msg-row:hover .msg-controls {
-  display:flex; 
-}
-
-
-.msg-delete, .msg-edit {
-  background:transparent; 
-  border-radius: 6px; 
-  border: 1px solid transparent; 
-  padding: 0.25rem 0.4rem; 
-  cursor:pointer;
-}
-.msg-delete { 
-  color:#c34; 
-  border-color:rgba(195,52,52,0.08); 
-}
-.msg-edit { 
-  color:#1177dd; 
-  border-color:rgba(17,119,221,0.08); 
+/* Username: try to show as much as possible, but truncate if really needed */
+.msg-name {
+  display: inline-block;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* allow the name to take priority by giving it more shrink/grow weight */
+  flex: 0 1 auto;
+  max-width: 62%; /* relative cap so controls still fit; adjusted by media queries */
+  vertical-align: middle;
 }
 
-#chat-form {
-  display:flex; gap:.5rem; align-items:center; margin-top:.6rem;
-  background: linear-gradient(180deg,#ffffff, #fbfeff);
-  padding:.5rem; border-radius:8px; border:1px solid rgba(12,20,30,0.04);
-  box-shadow: 0 6px 14px rgba(12,20,30,0.03);
-}
-#chat-name { 
-  width:170px; 
-  padding:.5rem; 
-  border-radius:6px; 
-  border:1px solid #ddd; 
-}
-#chat-text { 
-  flex:1; 
-  padding:.6rem; 
-  border-radius:6px; 
-  border:1px solid #ddd; 
+/* Timestamp stays together (no internal breaks) and will move below username when space is lacking */
+.msg-name + small {
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+  margin-left: .5rem;
+  color: #666;
 }
 
-#chat-send {
-  background: linear-gradient(180deg,#0b66ff,#1866ff);
-  color:#fff; border:none; padding:.6rem .8rem; border-radius:8px; cursor:pointer;
-  transition: transform .12s ease, box-shadow .12s ease;
-}
-#chat-send.sending { 
-  transform: scale(.98); 
-  box-shadow: 0 8px 22px rgba(11,102,255,0.12); 
+/* Message text:
+   - clamp to a couple of lines so it does not push controls / name off-screen
+   - use ellipsis for overflow; this makes the message "squeezed" instead of forcing scrolling */
+.msg-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* adjustable: number of visible lines */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-top: .25rem;
+  color: #0b2b45;
+  line-height: 1.25;
+  max-width: 100%;
 }
 
-#chat-typing { 
-  color:#476; 
-  font-size:.9rem; 
-  margin-top:.2rem; 
+/* Controls container: allow wrapping and prefer to keep on a single row
+   but fall back to wrapping / stacking when space is tight */
+.msg-controls-row {
+  display: flex;
+  gap: .35rem;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+/* Make individual control buttons non-flexing and not shrink text badly */
+.msg-controls-row button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+/* When very narrow, stack controls vertically to preserve username visibility */
+@media (max-width:640px) {
+  .msg-name { max-width: 68%; } /* give name more room on small screens */
+  .msg-text { -webkit-line-clamp: 2; } /* fewer lines on small screens */
+
+  /* If the available horizontal space is small, stack controls vertically to avoid overflow.
+     This helps when a long username would otherwise push controls off-screen. */
+  .msg-controls-row {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: .25rem;
+  }
+
+  /* reduce control button padding slightly on small devices so they fit better */
+  .msg-controls-row button {
+    padding: .18rem .36rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* Medium screens: allow more name width while ensuring controls remain visible */
+@media (min-width:641px) and (max-width:900px) {
+  .msg-name { max-width: 55%; }
+  .msg-text { -webkit-line-clamp: 3; }
+}
+
+/* Optional: if a message needs full text, tapping it could expand (leave styles for JS to toggle) */
+.msg-text.expanded {
+  -webkit-line-clamp: unset;
+  display: block;
+  overflow: visible;
 }
 
 .modal-backdrop {
@@ -792,7 +804,7 @@ h3 {
 .edit-actions .btn { padding:.45rem .7rem; border-radius:8px; cursor:pointer; }
 .edit-cancel {
   background:transparent; 
-  border:1px solid rgba(12,30,60,0.06); 
+  border: 1px solid rgba(12,30,60,0.06); 
   color:#134; 
 }
 .edit-save { 
@@ -936,10 +948,7 @@ h3 {
     padding: 0.5em;
   }
   .msg-bubble { max-width: 74%; }
-}
 
-/* Responsive tweaks: stack name + text on small screens and keep date together */
-@media (max-width:640px) {
   #chat-form {
     flex-direction: column;
     align-items: stretch;
@@ -980,7 +989,6 @@ h3 {
   }
   .msg-controls-row button { white-space: nowrap; }
 
-  
 }
 
 @media (max-width:420px) {
