@@ -855,13 +855,13 @@ h3 {
     padding: 0.3em 0.5em;
   }
   .msg-bubble { max-width: 84%; }
-  #chat-name { display:none; }
+  .msg-name { max-width: 30% }
   #chat-form { 
     flex-direction: column; 
     align-items: stretch;
     gap: 0.5rem;
   }
-  #chat-text { width: 40%; }
+  #chat-name { width: 30% }
   #chat-send { align-self: flex-end; }
   .msg-controls-row {
     display: flex;
