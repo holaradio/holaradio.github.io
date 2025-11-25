@@ -700,45 +700,45 @@
     });
     controls.appendChild(pinBtn);
 
-     const del = document.createElement('button');
-     del.className = 'msg-delete';
-     del.textContent = 'Ta bort';
-     del.title = 'Ta bort meddelande';
-     del.style.background = 'transparent';
-     del.style.border = '1px solid #e33';
-     del.style.color = '#e33';
-     del.style.padding = '.2rem .4rem';
-     del.style.borderRadius = '4px';
-     del.style.cursor = 'pointer';
-     del.style.display = canDelete ? '' : 'none';
-     del.addEventListener('click', (ev) => {
-       ev.stopPropagation();
-       deleteMessage(id, el);
-     });
-     controls.appendChild(del);
- 
-     // Edit button (admins or owner)
-     const canEdit = currentUid && (currentUid === uid || isUidAdmin(currentUid, currentEmail));
-     const editBtn = document.createElement('button');
-     editBtn.className = 'msg-edit';
-     editBtn.textContent = 'Redigera';
-     editBtn.title = 'Redigera meddelande';
-     editBtn.style.background = 'transparent';
-     editBtn.style.border = '1px solid #2a7ae2';
-     editBtn.style.color = '#2a7ae2';
-     editBtn.style.padding = '.2rem .4rem';
-     editBtn.style.borderRadius = '4px';
-     editBtn.style.cursor = 'pointer';
-     editBtn.style.display = canEdit ? '' : 'none';
-     editBtn.addEventListener('click', (ev) => {
-       ev.stopPropagation();
-       openEditInline(id, el, data);
-     });
-     controls.appendChild(editBtn);
- 
-     el.appendChild(controls);
- 
-     return el;
+    // Edit button (admins or owner)
+    const canEdit = currentUid && (currentUid === uid || isUidAdmin(currentUid, currentEmail));
+    const editBtn = document.createElement('button');
+    editBtn.className = 'msg-edit';
+    editBtn.textContent = 'Redigera';
+    editBtn.title = 'Redigera meddelande';
+    editBtn.style.background = 'transparent';
+    editBtn.style.border = '1px solid #2a7ae2';
+    editBtn.style.color = '#2a7ae2';
+    editBtn.style.padding = '.2rem .4rem';
+    editBtn.style.borderRadius = '4px';
+    editBtn.style.cursor = 'pointer';
+    editBtn.style.display = canEdit ? '' : 'none';
+    editBtn.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      openEditInline(id, el, data);
+    });
+    controls.appendChild(editBtn);
+     
+    const del = document.createElement('button');
+    del.className = 'msg-delete';
+    del.textContent = 'Ta bort';
+    del.title = 'Ta bort meddelande';
+    del.style.background = 'transparent';
+    del.style.border = '1px solid #e33';
+    del.style.color = '#e33';
+    del.style.padding = '.2rem .4rem';
+    del.style.borderRadius = '4px';
+    del.style.cursor = 'pointer';
+    del.style.display = canDelete ? '' : 'none';
+    del.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      deleteMessage(id, el);
+    });
+    controls.appendChild(del);
+
+    el.appendChild(controls);
+
+    return el;
    }
 
   // helper: attempt an async operation, on permission errors refresh token once and retry

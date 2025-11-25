@@ -858,7 +858,6 @@ h3 {
   #chat-name { display:none; }
 }
 
-/* Responsive: keep name input visible on smaller screens, stack form */
 @media (max-width:900px){
   #chat-form { 
     flex-direction: column; 
