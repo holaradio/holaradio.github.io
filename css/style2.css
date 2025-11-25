@@ -957,12 +957,18 @@ h3 {
   /* Ensure the send button aligns nicely */
   #chat-send { align-self: flex-end; }
 
-  .msg-name { display: inline-block; vertical-align: middle; max-width: calc(100% - 8rem); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .msg-name { 
+    display: inline-block; 
+    vertical-align: middle;
+    max-width: 30%; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+  }
   .msg-name + small {
     display: inline-block;
     vertical-align: middle;
     white-space: nowrap;      /* keep date intact */
-    margin-left: .5rem;
     color: #666;
   }
   .msg-controls-row {
@@ -974,13 +980,10 @@ h3 {
   }
   .msg-controls-row button { white-space: nowrap; }
 
-  @media (max-width:420px) {
+  
+}
+
+@media (max-width:420px) {
     .msg-controls-row { flex-direction: column; align-items: flex-end; }
     .msg-controls-row button { width: auto; }
   }
-}
-
-/* Small refinement for medium screens so long username doesn't push controls off-screen */
-@media (min-width:641px) and (max-width:900px) {
-  .msg-name { max-width: 48ch; }
-}
