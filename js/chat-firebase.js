@@ -225,12 +225,16 @@
   }
 
   function updateAdminStyles() {
+    const currentUid = (auth.currentUser && auth.currentUser.uid) || null;
+    const currentEmail = (auth.currentUser && auth.currentUser.email) ? String(auth.currentUser.email).toLowerCase() : null;
     Array.from(messagesEl.children).forEach(child => {
       const uid = child.dataset.uid || '';
       const nameEl = child.querySelector('.msg-name');
       const badgeEl = child.querySelector('.admin-badge');
       const msgNameText = (nameEl && nameEl.textContent) ? nameEl.textContent.trim().split(/\s+/)[0] : '';
       const messageEmailFallback = msgNameText && msgNameText.includes('@') ? msgNameText.toLowerCase() : null;
+
+      // admin badge / name color
       if (nameEl) {
         if (isUidAdmin(uid, messageEmailFallback)) {
           nameEl.style.color = '#2ecc71';
@@ -251,15 +255,24 @@
           if (badgeEl) badgeEl.remove();
         }
       }
+
+      // controls visibility: delete, edit, pin
       const deleteBtn = child.querySelector('.msg-delete');
-      if (deleteBtn) {
-        const currentUid = (auth.currentUser && auth.currentUser.uid) || null;
-        const currentEmail = (auth.currentUser && auth.currentUser.email) ? String(auth.currentUser.email).toLowerCase() : null;
-        if (currentUid && (currentUid === uid || isUidAdmin(currentUid, currentEmail))) {
-          deleteBtn.style.display = '';
-        } else {
-          deleteBtn.style.display = 'none';
-        }
+      const editBtn = child.querySelector('.msg-edit');
+      const pinBtn = child.querySelector('.msg-pin');
+      const pinnedFlag = child.dataset.pinned === 'true';
+
+      const canDelete = currentUid && (currentUid === uid || isUidAdmin(currentUid, currentEmail));
+      const canEdit = currentUid && (currentUid === uid || isUidAdmin(currentUid, currentEmail));
+      const canPin = currentUid && isUidAdmin(currentUid, currentEmail);
+
+      if (deleteBtn) deleteBtn.style.display = canDelete ? '' : 'none';
+      if (editBtn) editBtn.style.display = canEdit ? '' : 'none';
+      if (pinBtn) {
+        pinBtn.style.display = canPin ? '' : 'none';
+        // update text to reflect current pinned state
+        pinBtn.textContent = pinnedFlag ? 'Avpinna' : 'Pinna';
+        pinBtn.title = pinnedFlag ? 'Ta bort pin' : 'Pinna meddelande';
       }
     });
   }
