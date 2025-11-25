@@ -60,6 +60,13 @@
 
   const chatRoot = document.getElementById('chat');
   const statusEl = document.getElementById('chat-status');
+  // typing indicator element
+  let typingEl = document.getElementById('chat-typing');
+  if (!typingEl) {
+    typingEl = document.createElement('div');
+    typingEl.id = 'chat-typing';
+    statusEl.parentNode.insertBefore(typingEl, statusEl.nextSibling);
+  }
   const messagesEl = document.getElementById('chat-messages');
   const form = document.getElementById('chat-form');
   const nameInput = document.getElementById('chat-name');
@@ -102,11 +109,15 @@
       <details id="chat-admin-details">
         <summary style="cursor:pointer;padding:.25rem .5rem;border:1px solid #2ecc71;background:#fff;color:#2ecc71;border-radius:4px">Admin-panel</summary>
         <div style="padding:.6rem; background:#fff; border-radius:4px; margin-top:.4rem; box-shadow:0 0 0.5rem rgba(0,0,0,0.05);">
-          <div style="margin-bottom:.6rem">
+          <div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.6rem">
             <strong>Registrerade användare</strong>
-            <div id="admin-users-wrapper" style="max-height:220px;overflow:auto;margin-top:.4rem;border:1px solid #eee;padding:.4rem;border-radius:4px;background:#fafafa;">
-              <ul id="admin-users-list" style="margin:0;padding:0;list-style:none;"></ul>
-            </div>
+            <button id="admin-export-btn" style="margin-left:auto;padding:.25rem .5rem;border-radius:4px;border:1px solid #ddd;background:#f7f7f7;cursor:pointer">Exportera CSV</button>
+            <label style="display:flex;align-items:center;gap:.3rem;margin-left:.6rem;font-size:.9rem;color:#333">
+              <input id="admin-pinned-toggle" type="checkbox" /> Visa pinnade högst upp
+            </label>
+          </div>
+          <div id="admin-users-wrapper" style="max-height:220px;overflow:auto;margin-top:.4rem;border:1px solid #eee;padding:.4rem;border-radius:4px;background:#fafafa;">
+            <ul id="admin-users-list" style="margin:0;padding:0;list-style:none;"></ul>
           </div>
           <div id="admin-msg" style="color:#2ecc71;margin-top:.5rem;font-size:.9rem;display:none"></div>
         </div>
@@ -114,6 +125,33 @@
     `;
     chatRoot.insertBefore(adminPanel, statusEl.nextSibling);
   }
+
+  setTimeout(() => {
+    const exp = document.getElementById('admin-export-btn');
+    if (exp) exp.addEventListener('click', exportVisibleMessagesCSV);
+    const pinToggle = document.getElementById('admin-pinned-toggle');
+    if (pinToggle) {
+      // allow admin to control client-side pinned-first reorder
+      pinToggle.addEventListener('change', (e) => {
+        window._chat_showPinnedFirst = !!e.target.checked;
+        // re-render last snapshot by forcing a small refresh: re-query latest docs quickly
+        try { db.collection('chats').orderBy('ts','asc').limitToLast(400).get().then(snap => {
+          // mimic snapshot handler to re-render
+          messagesEl.innerHTML = '';
+          const docs = [];
+          snap.forEach(d => docs.push({ id: d.id, data: d.data() }));
+          // reuse same renderer logic used in onSnapshot below
+          const pinned = [], normal = [];
+          docs.forEach(({id, data}) => ((data && data.pinned) ? pinned : normal).push({id,data}));
+          const combined = (window._chat_showPinnedFirst !== false) ? pinned.concat(normal) : normal.concat(pinned);
+          combined.forEach(({id,data}) => messagesEl.appendChild(renderMessage(id, data)));
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        }).catch(()=>{}); } catch(e) {}
+      });
+      // initialize global flag
+      window._chat_showPinnedFirst = !!pinToggle.checked;
+    }
+  }, 200);
 
   const emailInput = document.getElementById('chat-email');
   const passInput = document.getElementById('chat-pass');
@@ -157,7 +195,7 @@
   // Admin caches
   const adminEmails = new Set();
   const adminUids = new Set();
-  let adminReady = false; // becomes true after first admins snapshot
+  let adminReady = false; 
 
   function isUidAdmin(uid, email) {
     if (!uid && !email) return false;
@@ -253,8 +291,6 @@
     console.warn('Failed to listen to admins collection', err);
   });
 
-  // ----- Registered users list & admin user panel actions -----
-  // This requires a Firestore collection "users" with documents keyed by uid or email and containing at least { displayName?, email?, uid? }.
   const registeredUsers = []; // array of { uid, email, name }
   function renderAdminUsersList() {
     if (!adminUsersList) return;
@@ -438,8 +474,40 @@
   let currentUser = null;
   auth.onAuthStateChanged(user => {
     currentUser = user;
-    // attach users listener once we have a signed-in user (so rules allow listing)
-    if (currentUser) attachUsersListener();
+    // on sign-in: refresh token and force a fresh admins fetch so UI updates immediately
+    (async function onAuthChange() {
+      if (currentUser) {
+        try {
+          if (auth.currentUser && auth.currentUser.getIdToken) await auth.currentUser.getIdToken(true);
+        } catch (e) { console.warn('token refresh on auth change failed', e); }
+        // force a fresh admins fetch to ensure admin sets are up-to-date for this session
+        try {
+          const snap = await db.collection('admins').get();
+          adminEmails.clear(); adminUids.clear();
+          snap.forEach(doc => {
+            const id = String(doc.id || '').trim();
+            const lid = id.toLowerCase();
+            if (lid.includes('@')) adminEmails.add(lid);
+            else adminUids.add(id);
+            const data = doc.data() || {};
+            if (data.uid) adminUids.add(String(data.uid).trim());
+            if (data.email) adminEmails.add(String(data.email).toLowerCase().trim());
+          });
+          adminReady = true;
+
+          // ensure UI reflects admin status immediately after sign-in
+          refreshAdminPanelVisibility();
+          updateAdminStyles();
+          renderAdminUsersList();
+          // ensure users listener attaches for newly detected admin
+          try { attachUsersListener(); } catch(e) { /* noop */ }
+        } catch (e) {
+          console.warn('Failed to refresh admins on auth change', e);
+        }
+        // now attach users listener (if admin)
+        attachUsersListener();
+      }
+    })();
     const userEmail = user && user.email ? user.email.toLowerCase() : null;
     if (user) {
       statusEl.textContent = user.isAnonymous ? 'Inloggad anonymt' : `Inloggad: ${user.email || user.displayName || user.uid}`;
@@ -485,37 +553,38 @@
 
   // Message listener: show public messages, DMs for recipient/sender, or all for admins
   try {
+    // build snapshot and render pinned-first optionally
     db.collection('chats').orderBy('ts', 'asc').limitToLast(400)
       .onSnapshot(snapshot => {
         messagesEl.innerHTML = '';
         const currentUid = currentUser && currentUser.uid ? String(currentUser.uid) : null;
         const currentEmail = currentUser && currentUser.email ? String(currentUser.email).toLowerCase() : null;
         const isAdminNow = isUidAdmin(currentUid, currentEmail);
+
+        const pinned = [], normal = [];
         snapshot.forEach(doc => {
           const data = doc.data() || {};
-          // prefer explicit fields, fall back to legacy "to"
+          // decide visibility:
           const toUid = data.toUid ? String(data.toUid) : null;
           const toEmail = data.toEmail ? String(data.toEmail).toLowerCase() : (data.to && String(data.to).includes('@') ? String(data.to).toLowerCase() : null);
           const legacyTo = data.to ? String(data.to).toLowerCase() : null;
-
-          // decide visibility:
-          // - public (no to / no dm) => show
-          // - admins see everything
-          // - sender sees their own messages
-          // - recipient sees DMs addressed to their uid or email
           const isDm = !!data.dm;
           const senderUid = data.uid || null;
           let show = false;
           if (!isDm && !toUid && !toEmail && !legacyTo) show = true;
           else if (isAdminNow) show = true;
-          else if (currentUid && senderUid && currentUid === senderUid) show = true; // sender sees their own DM
+          else if (currentUid && senderUid && currentUid === senderUid) show = true;
           else if (currentUid && toUid && currentUid === String(toUid)) show = true;
           else if (currentEmail && toEmail && currentEmail === String(toEmail)) show = true;
           else if (currentUid && legacyTo && legacyTo === currentUid) show = true;
           else if (currentEmail && legacyTo && legacyTo === currentEmail) show = true;
 
-          if (show) messagesEl.appendChild(renderMessage(doc.id, data));
+          if (!show) return;
+          if (data && data.pinned) pinned.push({ id: doc.id, data });
+          else normal.push({ id: doc.id, data });
         });
+        const combined = (window._chat_showPinnedFirst !== false) ? pinned.concat(normal) : normal.concat(pinned);
+        combined.forEach(item => messagesEl.appendChild(renderMessage(item.id, item.data)));
         messagesEl.scrollTop = messagesEl.scrollHeight;
       }, err => {
         console.error('Firestore snapshot error', err);
@@ -529,205 +598,269 @@
   }
 
   function renderMessage(id, data) {
-    const ts = (data.ts && data.ts.toDate) ? data.ts.toDate() : null;
-    const when = ts ? `${ts.toLocaleDateString()} ${ts.toLocaleTimeString()}` : '';
-    const uid = data.uid || '';
-    const el = document.createElement('div');
-    el.dataset.id = id;
-    el.dataset.uid = uid;
-    el.style.padding = '.2em .4em';
-    el.style.borderBottom = '1px solid #eee';
-    el.style.display = 'flex';
-    el.style.justifyContent = 'space-between';
-    el.style.alignItems = 'flex-start';
-
-    const left = document.createElement('div');
-    left.style.flex = '1';
-    const nameStrong = document.createElement('strong');
-    nameStrong.className = 'msg-name';
-    nameStrong.textContent = data.name || 'Anonym';
-    const nameAsEmail = (data.name && data.name.includes('@')) ? data.name.toLowerCase() : null;
-    if (isUidAdmin(uid, nameAsEmail)) {
-      nameStrong.style.color = '#2ecc71';
-      const b = document.createElement('span');
-      b.className = 'admin-badge';
-      b.textContent = ' admin';
-      b.style.marginLeft = '.4rem';
-      b.style.padding = '.05rem .3rem';
-      b.style.borderRadius = '3px';
-      b.style.background = '#2ecc71';
-      b.style.color = '#fff';
-      b.style.fontSize = '0.8rem';
-      nameStrong.appendChild(b);
-    }
-    left.appendChild(nameStrong);
-
-    const whenEl = document.createElement('small');
-    whenEl.style.color = '#666';
-    whenEl.style.marginLeft = '.6rem';
-    whenEl.textContent = ` ${when}`;
-    left.appendChild(whenEl);
-
-    const textDiv = document.createElement('div');
-    textDiv.innerHTML = escapeHtml(data.text || '') + (data.dm ? '<em style="color:#666;font-size:.85rem;margin-left:.6rem"> (DM)</em>' : '');
-    left.appendChild(textDiv);
-
-    // show edited label if present
-    if (data.edited) {
-      const editedAt = (data.editedAt && data.editedAt.toDate) ? data.editedAt.toDate() : null;
-      const edLabel = document.createElement('div');
-      edLabel.style.color = '#888';
-      edLabel.style.fontSize = '.8rem';
-      edLabel.style.marginTop = '.2rem';
-      edLabel.textContent = 'redigerad' + (editedAt ? ` ${editedAt.toLocaleDateString()} ${editedAt.toLocaleTimeString()}` : '');
-      left.appendChild(edLabel);
-    }
-
-    el.appendChild(left);
-
-    const controls = document.createElement('div');
-    controls.style.marginLeft = '.6rem';
-    controls.style.display = 'flex';
-    controls.style.alignItems = 'center';
-    controls.style.gap = '.4rem';
-
-    const currentUid = (auth.currentUser && auth.currentUser.uid) || null;
-    const currentEmail = (auth.currentUser && auth.currentUser.email) ? String(auth.currentUser.email).toLowerCase() : null;
-    const canDelete = currentUid && (currentUid === uid || isUidAdmin(currentUid, currentEmail));
-
-    const del = document.createElement('button');
-    del.className = 'msg-delete';
-    del.textContent = 'Ta bort';
-    del.title = 'Ta bort meddelande';
-    del.style.background = 'transparent';
-    del.style.border = '1px solid #e33';
-    del.style.color = '#e33';
-    del.style.padding = '.2rem .4rem';
-    del.style.borderRadius = '4px';
-    del.style.cursor = 'pointer';
-    del.style.display = canDelete ? '' : 'none';
-    del.addEventListener('click', (ev) => {
+    // mark pinned state on element so exports / UI can read it later
+    const pinnedFlag = !!(data && data.pinned);
+     const ts = (data.ts && data.ts.toDate) ? data.ts.toDate() : null;
+     const when = ts ? `${ts.toLocaleDateString()} ${ts.toLocaleTimeString()}` : '';
+     const uid = data.uid || '';
+     const el = document.createElement('div');
+     el.dataset.id = id;
+     el.dataset.uid = uid;
+     el.dataset.pinned = pinnedFlag ? 'true' : 'false';
+     el.style.padding = '.2em .4em';
+     el.style.borderBottom = '1px solid #eee';
+     el.style.display = 'flex';
+     el.style.justifyContent = 'space-between';
+     el.style.alignItems = 'flex-start';
+ 
+     const left = document.createElement('div');
+     left.style.flex = '1';
+     const nameStrong = document.createElement('strong');
+     nameStrong.className = 'msg-name';
+     nameStrong.textContent = data.name || 'Anonym';
+     const nameAsEmail = (data.name && data.name.includes('@')) ? data.name.toLowerCase() : null;
+     if (isUidAdmin(uid, nameAsEmail)) {
+       nameStrong.style.color = '#2ecc71';
+       const b = document.createElement('span');
+       b.className = 'admin-badge';
+       b.textContent = ' admin';
+       b.style.marginLeft = '.4rem';
+       b.style.padding = '.05rem .3rem';
+       b.style.borderRadius = '3px';
+       b.style.background = '#2ecc71';
+       b.style.color = '#fff';
+       b.style.fontSize = '0.8rem';
+       nameStrong.appendChild(b);
+     }
+     left.appendChild(nameStrong);
+ 
+     const whenEl = document.createElement('small');
+     whenEl.style.color = '#666';
+     whenEl.style.marginLeft = '.6rem';
+     whenEl.textContent = ` ${when}`;
+     left.appendChild(whenEl);
+ 
+     const textDiv = document.createElement('div');
+     textDiv.className = 'msg-text';
+     textDiv.innerHTML = escapeHtml(data.text || '') + (data.dm ? '<em style="color:#666;font-size:.85rem;margin-left:.6rem"> (DM)</em>' : '');
+     left.appendChild(textDiv);
+ 
+     // show edited label if present
+     if (data.edited) {
+       const editedAt = (data.editedAt && data.editedAt.toDate) ? data.editedAt.toDate() : null;
+       const edLabel = document.createElement('div');
+       edLabel.style.color = '#888';
+       edLabel.style.fontSize = '.8rem';
+       edLabel.style.marginTop = '.2rem';
+       edLabel.textContent = 'redigerad' + (editedAt ? ` ${editedAt.toLocaleDateString()} ${editedAt.toLocaleTimeString()}` : '');
+       left.appendChild(edLabel);
+     }
+ 
+     el.appendChild(left);
+ 
+     const controls = document.createElement('div');
+     controls.style.marginLeft = '.6rem';
+     controls.style.display = 'flex';
+     controls.style.alignItems = 'center';
+     controls.style.gap = '.4rem';
+ 
+     const currentUid = (auth.currentUser && auth.currentUser.uid) || null;
+     const currentEmail = (auth.currentUser && auth.currentUser.email) ? String(auth.currentUser.email).toLowerCase() : null;
+     const canDelete = currentUid && (currentUid === uid || isUidAdmin(currentUid, currentEmail));
+ 
+    // Pin button (admins only)
+    const canPin = currentUid && isUidAdmin(currentUid, currentEmail);
+    const pinBtn = document.createElement('button');
+    pinBtn.className = 'msg-pin';
+    pinBtn.textContent = pinnedFlag ? 'Avpinna' : 'Pinna';
+    pinBtn.title = pinnedFlag ? 'Ta bort pin' : 'Pinna meddelande';
+    pinBtn.style.display = canPin ? '' : 'none';
+    pinBtn.style.background = 'transparent';
+    pinBtn.style.border = '1px solid #f0ad4e';
+    pinBtn.style.color = '#a66a00';
+    pinBtn.style.padding = '.2rem .4rem';
+    pinBtn.style.borderRadius = '4px';
+    pinBtn.style.cursor = 'pointer';
+    pinBtn.addEventListener('click', (ev) => {
       ev.stopPropagation();
-      deleteMessage(id, el);
+      togglePinMessage(id, pinnedFlag);
     });
-    controls.appendChild(del);
+    controls.appendChild(pinBtn);
 
-    // Edit button (admins or owner)
-    const canEdit = currentUid && (currentUid === uid || isUidAdmin(currentUid, currentEmail));
-    const editBtn = document.createElement('button');
-    editBtn.className = 'msg-edit';
-    editBtn.textContent = 'Redigera';
-    editBtn.title = 'Redigera meddelande';
-    editBtn.style.background = 'transparent';
-    editBtn.style.border = '1px solid #2a7ae2';
-    editBtn.style.color = '#2a7ae2';
-    editBtn.style.padding = '.2rem .4rem';
-    editBtn.style.borderRadius = '4px';
-    editBtn.style.cursor = 'pointer';
-    editBtn.style.display = canEdit ? '' : 'none';
-    editBtn.addEventListener('click', (ev) => {
-      ev.stopPropagation();
-      openEditInline(id, el, data);
+     const del = document.createElement('button');
+     del.className = 'msg-delete';
+     del.textContent = 'Ta bort';
+     del.title = 'Ta bort meddelande';
+     del.style.background = 'transparent';
+     del.style.border = '1px solid #e33';
+     del.style.color = '#e33';
+     del.style.padding = '.2rem .4rem';
+     del.style.borderRadius = '4px';
+     del.style.cursor = 'pointer';
+     del.style.display = canDelete ? '' : 'none';
+     del.addEventListener('click', (ev) => {
+       ev.stopPropagation();
+       deleteMessage(id, el);
+     });
+     controls.appendChild(del);
+ 
+     // Edit button (admins or owner)
+     const canEdit = currentUid && (currentUid === uid || isUidAdmin(currentUid, currentEmail));
+     const editBtn = document.createElement('button');
+     editBtn.className = 'msg-edit';
+     editBtn.textContent = 'Redigera';
+     editBtn.title = 'Redigera meddelande';
+     editBtn.style.background = 'transparent';
+     editBtn.style.border = '1px solid #2a7ae2';
+     editBtn.style.color = '#2a7ae2';
+     editBtn.style.padding = '.2rem .4rem';
+     editBtn.style.borderRadius = '4px';
+     editBtn.style.cursor = 'pointer';
+     editBtn.style.display = canEdit ? '' : 'none';
+     editBtn.addEventListener('click', (ev) => {
+       ev.stopPropagation();
+       openEditInline(id, el, data);
+     });
+     controls.appendChild(editBtn);
+ 
+     el.appendChild(controls);
+ 
+     return el;
+   }
+
+  // helper: attempt an async operation, on permission errors refresh token once and retry
+  async function attemptWithRefresh(op) {
+    try {
+      return await op();
+    } catch (err) {
+      const msg = String((err && (err.code || err.message)) || '').toLowerCase();
+      const isPerm = msg.includes('permission') || msg.includes('permission-denied') || msg.includes('insufficient');
+      if (!isPerm) throw err;
+      console.debug('Attempt failed with permission error — refreshing token and retrying...', err);
+      try {
+        if (auth.currentUser && auth.currentUser.getIdToken) {
+          await auth.currentUser.getIdToken(true);
+        }
+      } catch (tErr) {
+        console.warn('Token refresh failed', tErr);
+      }
+      // retry once
+      return await op();
+    }
+  }
+
+  // UI confirm modal (non-blocking) -> Promise<boolean>
+  function showConfirm(title, message, opts = {}) {
+    return new Promise(resolve => {
+      try {
+        const bd = document.createElement('div'); bd.className = 'modal-backdrop';
+        const m = document.createElement('div'); m.className = 'modal';
+        m.innerHTML = `<h3>${escapeHtml(title||'Bekräfta')}</h3><p>${escapeHtml(message||'')}</p>
+          <div class="row">
+            <button class="btn-secondary btn-cancel">Avbryt</button>
+            <button class="btn-primary btn-ok">${escapeHtml(opts.okText || 'Ja')}</button>
+          </div>`;
+        bd.appendChild(m);
+        document.body.appendChild(bd);
+        const cleanup = (r) => { try { bd.remove(); } catch(e){} resolve(r); };
+        m.querySelector('.btn-cancel').addEventListener('click', ()=> cleanup(false));
+        m.querySelector('.btn-ok').addEventListener('click', ()=> cleanup(true));
+        const onKey = (ev) => { if (ev.key === 'Escape') { cleanup(false); window.removeEventListener('keydown', onKey); } };
+        window.addEventListener('keydown', onKey);
+      } catch (e) { console.error('showConfirm failed', e); resolve(false); }
     });
-    controls.appendChild(editBtn);
-
-    el.appendChild(controls);
-
-    return el;
   }
 
   async function deleteMessage(docId, domEl) {
-    if (!confirm('Är du säker på att du vill ta bort detta meddelande?')) return;
+    const ok = await showConfirm('Ta bort meddelande', 'Är du säker på att du vill ta bort detta meddelande? Det går inte att återställa.');
+    if (!ok) return;
     try {
-      await db.collection('chats').doc(docId).delete();
+      await attemptWithRefresh(() => db.collection('chats').doc(docId).delete());
       if (domEl && domEl.parentNode) domEl.parentNode.removeChild(domEl);
       showTemp('Meddelandet togs bort.');
     } catch (err) {
-      console.error('delete failed', err);
-      if (err && err.code === 'permission-denied') showTemp('Du har inte behörighet att ta bort detta meddelande.');
+      console.error('delete failed after retry', err);
+      if (err && (err.code === 'permission-denied' || String(err).toLowerCase().includes('permission'))) showTemp('Du har inte behörighet att ta bort detta meddelande.');
       else showTemp('Kunde inte ta bort meddelandet.');
     }
   }
-
+  
   // Inline edit: replace message text with an input + Save/Cancel
   function openEditInline(docId, domEl, data) {
-    const textDiv = domEl.querySelector('div'); // first div after name/when
+    const textDiv = domEl.querySelector('.msg-text');
     if (!textDiv) return;
     const oldText = data.text || '';
     // hide existing text
     textDiv.style.display = 'none';
-
+ 
     const editWrap = document.createElement('div');
-    editWrap.style.display = 'flex';
-    editWrap.style.gap = '.4rem';
+    editWrap.className = 'edit-wrap';
     editWrap.style.marginTop = '.3rem';
-
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.value = oldText;
-    input.style.flex = '1';
-    input.maxLength = MAX_MESSAGE_LENGTH;
-    editWrap.appendChild(input);
-
-    const saveBtn = document.createElement('button');
-    saveBtn.textContent = 'Spara';
-    saveBtn.style.background = '#2a7ae2';
-    saveBtn.style.color = '#fff';
-    saveBtn.style.border = 'none';
-    saveBtn.style.padding = '.25rem .5rem';
-    saveBtn.style.borderRadius = '4px';
-    saveBtn.style.cursor = 'pointer';
-    editWrap.appendChild(saveBtn);
-
+    const textarea = document.createElement('textarea');
+    textarea.value = oldText;
+    textarea.maxLength = MAX_MESSAGE_LENGTH;
+    textarea.style.width = '100%';
+    textarea.style.minHeight = '120px';
+    textarea.setAttribute('aria-label', 'Redigera meddelande');
+    editWrap.appendChild(textarea);
+    const actions = document.createElement('div');
+    actions.className = 'edit-actions';
     const cancelBtn = document.createElement('button');
+    cancelBtn.className = 'edit-cancel';
     cancelBtn.textContent = 'Avbryt';
-    cancelBtn.style.padding = '.25rem .5rem';
-    cancelBtn.style.borderRadius = '4px';
-    cancelBtn.style.cursor = 'pointer';
-    editWrap.appendChild(cancelBtn);
-
+    const saveBtn = document.createElement('button');
+    saveBtn.className = 'edit-save';
+    saveBtn.textContent = 'Spara';
+    actions.appendChild(cancelBtn);
+    actions.appendChild(saveBtn);
+    editWrap.appendChild(actions);
     textDiv.parentNode.insertBefore(editWrap, textDiv.nextSibling);
-
-    cancelBtn.addEventListener('click', () => {
-      editWrap.remove();
-      textDiv.style.display = '';
+ 
+    cancelBtn.addEventListener('click', () => { editWrap.remove(); textDiv.style.display = ''; });
+    textarea.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape') { ev.preventDefault(); cancelBtn.click(); }
+      if ((ev.key === 'Enter' && (ev.ctrlKey || ev.metaKey))) { ev.preventDefault(); saveBtn.click(); }
     });
-
     saveBtn.addEventListener('click', async () => {
-      const newText = (input.value || '').trim();
-      if (!newText) { showTemp('Meddelandet får inte vara tomt.'); return; }
-      if (newText.length > MAX_MESSAGE_LENGTH) { showTemp(`Meddelande för långt (max ${MAX_MESSAGE_LENGTH} tecken).`); return; }
-      try {
-        // debug: log who is attempting the edit and current admin sets
-        console.debug('chatDebug: edit attempt', {
-          docId,
-          currentUser: auth.currentUser && { uid: auth.currentUser.uid, email: (auth.currentUser.email||'').toLowerCase() },
-          adminEmails: Array.from(adminEmails),
-          adminUids: Array.from(adminUids),
-          ownerUid: data.uid,
-          newTextPreview: newText.slice(0,120)
-        });
-         await db.collection('chats').doc(docId).update({
-           text: replaceProfanity(newText),
-           edited: true,
-           editedAt: firebase.firestore.FieldValue.serverTimestamp()
-         });
+      const newText = (textarea.value || '').trim();
+       if (!newText) { showTemp('Meddelandet får inte vara tomt.'); return; }
+       if (newText.length > MAX_MESSAGE_LENGTH) { showTemp(`Meddelande för långt (max ${MAX_MESSAGE_LENGTH} tecken).`); return; }
+       try {
+        // update message (no edit-history stored)
+        await attemptWithRefresh(() => db.collection('chats').doc(docId).update({
+          text: replaceProfanity(newText),
+          edited: true,
+          editedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }));
          editWrap.remove();
          // optimistic UI: update shown text and reveal
          textDiv.innerHTML = escapeHtml(newText) + (data.dm ? '<em style="color:#666;font-size:.85rem;margin-left:.6rem"> (DM)</em>' : '');
          textDiv.style.display = '';
          showTemp('Meddelandet uppdaterat.');
        } catch (err) {
-         console.debug('chatDebug: edit failed', err);
+         console.debug('edit failed after retry', err);
          console.error('edit failed', err);
-         if (err && err.code === 'permission-denied') showTemp('Du har inte behörighet att redigera detta meddelande.');
+         if (err && (err.code === 'permission-denied' || String(err).toLowerCase().includes('permission'))) showTemp('Du har inte behörighet att redigera detta meddelande.');
          else showTemp('Kunde inte uppdatera meddelandet.');
        }
-     });
+      });
    }
 
+  // typing indicator (local only)
+  let typingTimer = null;
+  textInput.addEventListener('input', () => {
+    typingEl.textContent = (textInput.value && textInput.value.length > 0) ? `${(nameInput.value||'Du')} skriver...` : '';
+    clearTimeout(typingTimer);
+    if (textInput.value && textInput.value.length > 0) {
+      typingTimer = setTimeout(()=> { typingEl.textContent = ''; }, 1400);
+    }
+  });
+
+  // animate send button during send
   form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
+    sendBtn.classList.add('sending');
+    setTimeout(()=> sendBtn.classList.remove('sending'), 700);
     if (sendBtn.disabled) { showTemp('Skickning inaktiverad tills autentisering fungerar.'); return; }
     if (!canPostNow()) {
       const wait = Math.ceil((MIN_POST_INTERVAL_MS - (Date.now() - Number(localStorage.getItem(LAST_POST_KEY) || 0))) / 1000);
@@ -763,6 +896,44 @@
     }
   });
 
+  // Toggle pinned state (admin or owner)
+  async function togglePinMessage(docId, currentPinned) {
+    try {
+      await attemptWithRefresh(() => db.collection('chats').doc(docId).update({
+        pinned: !currentPinned
+      }));
+      showTemp(!currentPinned ? 'Meddelandet pinnat.' : 'Pinnen borttagen.');
+    } catch (err) {
+      console.error('togglePinMessage failed', err);
+      showTemp('Kunde inte uppdatera pin-status.');
+    }
+  }
+
+  // Export currently visible messages to CSV (downloads a file)
+  function exportVisibleMessagesCSV() {
+    const rows = [['id','ts','name','uid','text','pinned','edited']]; // header
+    Array.from(messagesEl.children).forEach(node => {
+      const id = node.dataset.id || '';
+      const uid = node.dataset.uid || '';
+      const name = (node.querySelector('.msg-name') && node.querySelector('.msg-name').textContent.trim()) || '';
+      const tsNode = node.querySelector('small');
+      const ts = tsNode ? tsNode.textContent.trim() : '';
+      const text = (node.querySelector('.msg-text') && node.querySelector('.msg-text').textContent.trim()) || '';
+      const pinned = node.dataset.pinned === 'true' || false;
+      const edited = !!node.querySelector('div') && node.querySelector('div').textContent.includes('redigerad');
+      rows.push([id, ts, name, uid, text.replace(/\r?\n/g,' '), pinned, edited]);
+    });
+    const csv = rows.map(r => r.map(c => `"${String(c||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `chats-${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  }
+
   window.chatSignOut = signOut;
+
+  // edit-history feature removed
 
 })();
