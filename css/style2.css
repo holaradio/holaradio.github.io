@@ -940,7 +940,6 @@ h3 {
 
 /* Responsive tweaks: stack name + text on small screens and keep date together */
 @media (max-width:640px) {
-  /* Stack inputs and make them same height */
   #chat-form {
     flex-direction: column;
     align-items: stretch;
@@ -949,12 +948,10 @@ h3 {
   #chat-name, #chat-text {
     width: 100% !important;
     box-sizing: border-box;
-    height: 3.8rem;            /* same visual height for both */
-    min-height: 3.4rem;
+    max-height: 3.4rem;
     padding: .6rem .8rem;
     font-size: 1rem;
   }
-  /* keep the name above the message input */
   #chat-name { order: -1; margin-bottom: .25rem; }
 
   /* Ensure the send button aligns nicely */
