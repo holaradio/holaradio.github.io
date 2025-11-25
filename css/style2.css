@@ -936,14 +936,6 @@ h3 {
     padding: 0.5em;
   }
   .msg-bubble { max-width: 74%; }
-  .msg-name { 
-    max-width: 56ch; 
-    display: inline-block; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    white-space: nowrap; 
-    vertical-align: middle; 
-  }
 }
 
 @media (max-width:520px) {
