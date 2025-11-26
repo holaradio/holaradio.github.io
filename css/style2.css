@@ -919,10 +919,6 @@ h3 {
     font-size: 0.8em;
     padding: 0.5em;
   }
-  #chat-send {
-    flex: -1;
-  }
-
   #chat-form {
     flex-direction: column;
     align-items: stretch;
@@ -930,14 +926,10 @@ h3 {
   }
 
   #chat-name, #chat-text {
-    width: 100% !important;
     box-sizing: border-box;
   }
-
-  #chat-name { order: -1; }
-
   #chat-send {
-    align-self: flex-end;
+    order: -1;
     width: auto;
     margin-top: 0.25rem;
   }
