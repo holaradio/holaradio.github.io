@@ -696,7 +696,7 @@
     const canPin = currentUid && isUidAdmin(currentUid, currentEmail);
     const pinBtn = document.createElement('button');
     pinBtn.className = 'msg-pin';
-    pinBtn.textContent = pinnedFlag ? 'Avpinna' : 'Pinna';
+    pinBtn.textContent = pinnedFlag ? 'Avnåla' : 'Nåla';
     pinBtn.title = pinnedFlag ? 'Ta bort pin' : 'Pinna meddelande';
     pinBtn.style.display = canPin ? '' : 'none';
     pinBtn.style.background = 'transparent';
