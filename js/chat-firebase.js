@@ -649,6 +649,7 @@
  
      const whenEl = document.createElement('small');
      whenEl.style.color = '#666';
+     whenEl.style.whiteSpace = 'nowrap';
      whenEl.style.marginLeft = '.6rem';
      whenEl.textContent = ` ${when}`;
      left.appendChild(whenEl);
@@ -658,7 +659,6 @@
      textDiv.innerHTML = escapeHtml(data.text || '') + (data.dm ? '<em style="color:#666;font-size:.85rem;margin-left:.6rem"> (DM)</em>' : '');
      left.appendChild(textDiv);
  
-     // show edited label if present
      if (data.edited) {
        const editedAt = (data.editedAt && data.editedAt.toDate) ? data.editedAt.toDate() : null;
        const edLabel = document.createElement('div');
@@ -681,7 +681,6 @@
      const currentEmail = (auth.currentUser && auth.currentUser.email) ? String(auth.currentUser.email).toLowerCase() : null;
      const canDelete = currentUid && (currentUid === uid || isUidAdmin(currentUid, currentEmail));
  
-    // Pin button (admins only)
     const canPin = currentUid && isUidAdmin(currentUid, currentEmail);
     const pinBtn = document.createElement('button');
     pinBtn.className = 'msg-pin';
@@ -700,7 +699,6 @@
     });
     controls.appendChild(pinBtn);
 
-    // Edit button (admins or owner)
     const canEdit = currentUid && (currentUid === uid || isUidAdmin(currentUid, currentEmail));
     const editBtn = document.createElement('button');
     editBtn.className = 'msg-edit';
@@ -839,14 +837,12 @@
        if (!newText) { showTemp('Meddelandet får inte vara tomt.'); return; }
        if (newText.length > MAX_MESSAGE_LENGTH) { showTemp(`Meddelande för långt (max ${MAX_MESSAGE_LENGTH} tecken).`); return; }
        try {
-        // update message (no edit-history stored)
         await attemptWithRefresh(() => db.collection('chats').doc(docId).update({
           text: replaceProfanity(newText),
           edited: true,
           editedAt: firebase.firestore.FieldValue.serverTimestamp()
         }));
          editWrap.remove();
-         // optimistic UI: update shown text and reveal
          textDiv.innerHTML = escapeHtml(newText) + (data.dm ? '<em style="color:#666;font-size:.85rem;margin-left:.6rem"> (DM)</em>' : '');
          textDiv.style.display = '';
          showTemp('Meddelandet uppdaterat.');
