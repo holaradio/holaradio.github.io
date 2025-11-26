@@ -699,7 +699,7 @@ h3 {
   box-shadow: 0 6px 14px rgba(12,20,30,0.03);
 }
 #chat-name { 
-  width:170px; 
+  width:30%; 
   padding:.5rem; 
   border-radius:6px; 
   border:1px solid #ddd; 
