@@ -8,7 +8,7 @@ body {
 }
 
 #wrapper {
-  max-width: 100vw;
+  max-width: 60rem;
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -701,9 +701,8 @@ h3 {
 
 /* Make individual control buttons non-flexing and not shrink text badly */
 .msg-controls-row button {
-  flex: 0 1 auto;
-  min-width: 0;
-  box-sizing: border-box;
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 /* When very narrow, stack controls vertically to preserve username visibility */
@@ -1003,41 +1002,3 @@ h3 {
     .msg-controls-row { flex-direction: column; align-items: flex-end; }
     .msg-controls-row button { width: auto; }
   }
-
-
-html, body {
-  max-width: 100%;
-  overflow-x: hidden; 
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-#wrapper {
-  max-width: 100vw;
-  box-sizing: border-box;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
-
-#chat-messages, .msg-row, .msg-row > div, .msg-text, .msg-controls-row {
-  min-width: 0;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
-
-.msg-controls-row button {
-  flex: 0 1 auto;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-img, .msg-text img {
-  max-width: 100%;
-  height: auto;
-  display: inline-block;
-  box-sizing: border-box;
-}
