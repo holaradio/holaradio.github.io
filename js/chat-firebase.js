@@ -661,7 +661,7 @@
  
      const whenEl = document.createElement('small');
      whenEl.style.color = '#666';
-     whenEl.style.wordBreak = 'break-all';
+     whenEl.style.whiteSpace = 'nowrap';
      whenEl.style.marginLeft = '.6rem';
      whenEl.textContent = ` ${when}`;
      left.appendChild(whenEl);
