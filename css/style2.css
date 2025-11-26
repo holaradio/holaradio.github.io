@@ -713,7 +713,11 @@ h3 {
 
 #chat-send {
   background: linear-gradient(180deg,#0b66ff,#1866ff);
-  color:#fff; border:none; padding:.6rem .8rem; border-radius:8px; cursor:pointer;
+  color:#fff; 
+  border:none; 
+  padding:.6rem .8rem; 
+  border-radius:8px; 
+  cursor:pointer;
   transition: transform .12s ease, box-shadow .12s ease;
 }
 #chat-send.sending { 
@@ -914,6 +918,9 @@ h3 {
    #footer {
     font-size: 0.8em;
     padding: 0.5em;
+  }
+  #chat-send {
+    flex: -1;
   }
 
 }
