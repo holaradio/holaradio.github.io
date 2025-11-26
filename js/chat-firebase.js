@@ -187,6 +187,18 @@
     el._t = setTimeout(() => el.style.display = 'none', timeout);
   }
   function replaceProfanity(s) { return s.replace(bannedRegex, m => '•'.repeat(m.length)); }
+
+  // Date formatting helpers: DDMMYY and DDMMYY HH:MM
+  function _pad2(n){ return String(n).padStart(2,'0'); }
+  function formatDDMMYY(d){
+    if(!d || !(d instanceof Date)) return '';
+    return _pad2(d.getDate()) + _pad2(d.getMonth() + 1) + String(d.getFullYear()).slice(-2);
+  }
+  function formatDateTime(d){
+    if(!d || !(d instanceof Date)) return '';
+    return `${formatDDMMYY(d)} ${_pad2(d.getHours())}:${_pad2(d.getMinutes())}`;
+  }
+
   function canPostNow() { try { const last = Number(localStorage.getItem(LAST_POST_KEY) || 0); return (Date.now() - last) >= MIN_POST_INTERVAL_MS; } catch (e) { return true; } }
   function rememberPostTs() { try { localStorage.setItem(LAST_POST_KEY, String(Date.now())); } catch (e) {} }
   function saveName(name) { try { localStorage.setItem(NAME_STORE_KEY, name); } catch (e) {} }
@@ -614,7 +626,7 @@
     // mark pinned state on element so exports / UI can read it later
     const pinnedFlag = !!(data && data.pinned);
      const ts = (data.ts && data.ts.toDate) ? data.ts.toDate() : null;
-     const when = ts ? `${ts.toLocaleDateString()} ${ts.toLocaleTimeString()}` : '';
+     const when = ts ? formatDateTime(ts) : '';
      const uid = data.uid || '';
      const el = document.createElement('div');
      el.dataset.id = id;
@@ -665,7 +677,7 @@
        edLabel.style.color = '#888';
        edLabel.style.fontSize = '.8rem';
        edLabel.style.marginTop = '.2rem';
-       edLabel.textContent = 'redigerad' + (editedAt ? ` ${editedAt.toLocaleDateString()} ${editedAt.toLocaleTimeString()}` : '');
+       edLabel.textContent = 'redigerad' + (editedAt ? ` ${formatDateTime(editedAt)}` : '');
        left.appendChild(edLabel);
      }
  
@@ -936,7 +948,8 @@
     const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; a.download = `chats-${new Date().toISOString().slice(0,10)}.csv`;
+    a.href = url;
+    a.download = `chats-${formatDDMMYY(new Date())}.csv`;
     document.body.appendChild(a); a.click(); a.remove();
     URL.revokeObjectURL(url);
   }
