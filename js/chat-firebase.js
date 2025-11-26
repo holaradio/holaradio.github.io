@@ -923,7 +923,7 @@
       await attemptWithRefresh(() => db.collection('chats').doc(docId).update({
         pinned: !currentPinned
       }));
-      showTemp(!currentPinned ? 'Meddelandet pinnat.' : 'Pinnen borttagen.');
+      showTemp(!currentPinned ? 'Meddelandet nålat.' : 'Nålen borttagen.');
     } catch (err) {
       console.error('togglePinMessage failed', err);
       showTemp('Kunde inte uppdatera pin-status.');
