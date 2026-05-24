@@ -24,8 +24,16 @@
     <div id="kommuninfo">
       <h2>Officiell information från Hôla kommun</h2>
       <img src="/images/kommun.png" class="image-left" alt="Kommunvapnet"/>
+      <h3>Allmän tillfrågan: S eller ej?</h3>
+      <form id="kommunen-form">
+        <label><input type="radio" id="svar1" name="svar" value="jas">S</label>
+        <label><input type="radio" id="svar2" name="svar" value="nejs">Ej S</label>
+        <button type="button" id="submit-btn">Skicka in svar</button>
+      </form>
+      <p id="status"></p>
+      <h3>Välkommen</h3>
       <p>
-        Välkommen till Hôla kommuns informationssida! Här hittar du aktuella projekt, pågående initiativ och samhällsmeddelanden.
+        ...till Hôla kommuns informationssida! Här hittar du aktuella projekt, pågående initiativ och samhällsmeddelanden.
         Som alltid leds samtliga utvecklingsinsatser av <strong>projektledare Orkel Svullén</strong>, tillhörande den nybildade projektförvaltningen, som med sin unika vision puttar kommunen in i framtiden.
       </p>
       <h3>Kommande medborgardialog</h3>
@@ -33,11 +41,10 @@
         Den 3:e bjuder kommunen in till ett öppet samtal med Orkel Svullén om framtida satsningar.
       </p>
       <button class="kalender-knapp">Lägg till i min kalender</button>
-      <p id="status"></p>
       <h3>Aktuella projekt & initiativ</h3>
         <a href="webbkamera.html"><strong>Webbkamera mot ingenting:</strong></a> Kommunen satsar på slow-tv. Efter att ha utsetts till frivillig, har Ruban nu placerat en webkamera riktad
         mot en stubbe i Hôlskogen. 
-  
+      
 
      
 
@@ -60,6 +67,7 @@
 
     <div id="footer">© 2014 Radio Hôla | 68,7 MHz – i samarbete med Hôla kommun</div>
   </div>
+  <script src="js/kommunen-form.js"></script>
   <script src="js/event-button.js"></script>
 </body>
 </html>
