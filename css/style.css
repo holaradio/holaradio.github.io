@@ -157,6 +157,7 @@ html, body {
   float:left; 
   width: 40%;
   height: 20;
+  margin-top: 1.5em;
   margin-right: 1em;
   max-width: 40vw;
 }
@@ -398,6 +399,12 @@ html, body {
 
 #tabla-container {
   font-family: 'Georgia', serif;
+}
+
+h2.blue {
+  color: #333366;
+  border-bottom: 0.07em #888;
+  margin-top: 1.5em;
 }
 
 h3 {
